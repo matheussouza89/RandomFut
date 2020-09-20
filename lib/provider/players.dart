@@ -34,6 +34,7 @@ class Players with ChangeNotifier {
           name: player.name,
           position: player.position,
           avatar: player.avatar,
+          rate: player.rate,
         ),
       );
     } else {
@@ -45,6 +46,7 @@ class Players with ChangeNotifier {
           name: player.name,
           position: player.position,
           avatar: player.avatar,
+          rate: player.rate,
         ),
       );
     }

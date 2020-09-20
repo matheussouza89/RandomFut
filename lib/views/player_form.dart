@@ -2,9 +2,18 @@ import 'package:flutter/material.dart';
 import 'package:randomfut/models/player.dart';
 import 'package:randomfut/provider/players.dart';
 import 'package:provider/provider.dart';
+import 'package:smooth_star_rating/smooth_star_rating.dart';
 
-class PlayerForm extends StatelessWidget {
+class PlayerForm extends StatefulWidget {
+  @override
+  _PlayerFormState createState() => _PlayerFormState();
+}
+
+class _PlayerFormState extends State<PlayerForm> {
+  var rating;
+
   final _form = GlobalKey<FormState>();
+
   final Map<String, Object> _formData = {};
 
   void _loadFormData(Player player) {
@@ -13,6 +22,17 @@ class PlayerForm extends StatelessWidget {
       _formData['name'] = player.name;
       _formData['position'] = player.position;
       _formData['avatar'] = player.avatar;
+      _formData['rate'] = player.rate;
+    }
+  }
+
+  void teste(Player player) {
+    if (_formData['rate'] != null) {
+      rating = player.rate;
+      print('Deu certo');
+    } else {
+      rating = 0.0;
+      print('NAAAAAAAAAAAAAAAAAOOOOOOOOO');
     }
   }
 
@@ -21,6 +41,7 @@ class PlayerForm extends StatelessWidget {
     final Player player = ModalRoute.of(context).settings.arguments;
 
     _loadFormData(player);
+    teste(player);
 
     return Scaffold(
       appBar: AppBar(
@@ -39,6 +60,7 @@ class PlayerForm extends StatelessWidget {
                     name: _formData['name'],
                     position: _formData['position'],
                     avatar: null,
+                    rate: _formData['rate'],
                   ),
                 );
 
@@ -77,10 +99,34 @@ class PlayerForm extends StatelessWidget {
               SizedBox(
                 height: 40,
               ),
+              FormField(
+                builder: (context) {
+                  return SmoothStarRating(
+                      allowHalfRating: false,
+                      rating: rating,
+                      onRated: (value) {
+                        print('rating value -> $value');
+                        rating = value;
+                      },
+                      starCount: 5,
+                      size: 40.0,
+                      isReadOnly: false,
+                      filledIconData: Icons.star,
+                      halfFilledIconData: Icons.star_half,
+                      defaultIconData: Icons.star_border,
+                      color: Colors.green,
+                      borderColor: Colors.green,
+                      spacing: 0.0);
+                },
+                onSaved: (value) => _formData['rate'] = rating,
+              ),
+              SizedBox(
+                height: 40,
+              ),
               FloatingActionButton(
                 child: Icon(Icons.file_upload),
                 onPressed: () => {},
-              )
+              ),
             ],
           ),
         ),
