@@ -9,33 +9,34 @@ class CountDownTimer extends StatefulWidget {
 }
 
 class _CountDownTimerState extends State<CountDownTimer> {
+  int placarA = 0;
+  int placarB = 0;
+
   double percent = 0;
-  static int TimeInMinut =
-      25; //Adicionar aqui a variável de tempo que o usuário digitar
-  int TimeInSec = TimeInMinut * 60;
+  static int timeInMinut =
+      1; //Adicionar aqui a variável de tempo que o usuário digitar
+  int timeInSec = timeInMinut * 60;
   Timer timer;
-  void _StartTimer() {
-    TimeInMinut = 25;
-    int Time = TimeInSec;
-    double SecPercent = (Time / 100);
-    print(SecPercent);
+  void _startTimer() {
+    timeInMinut = 1;
+    int time = timeInSec;
+    double secPercent = ((100/timeInSec)/100);
+    print(secPercent);
     timer = Timer.periodic(Duration(seconds: 1), (timer) {
       setState(() {
-        if (Time > 0) {
-          Time--;
-          if (Time % 60 == 0) {
-            TimeInMinut--;
-          }
-          if (Time % SecPercent == 0) {
-            if (percent < 1) {
-              percent += 0.01;
+        if (time > 0) {
+          time--;
+          timeInSec--;
+          if (percent < 1) {
+            if((percent + secPercent) < 1){
+              percent += secPercent;
+            }
             } else {
               percent = 1;
             }
-          }
         } else {
           percent = 0;
-          TimeInMinut = 25;
+          timeInSec = 60;
           timer.cancel();
         }
       });
@@ -68,12 +69,12 @@ class _CountDownTimerState extends State<CountDownTimer> {
                   animation: true,
                   lineWidth: 20.0,
                   circularStrokeCap: CircularStrokeCap.round,
-                  reverse: true,
+                  reverse: false,
                   animateFromLastPercent: true,
                   radius: 200.0,
                   progressColor: Colors.white,
                   center: Text(
-                    "00:00",
+                    "$timeInSec",
                     style: TextStyle(
                       color: Colors.white,
                       fontSize: 60.0,
@@ -113,7 +114,7 @@ class _CountDownTimerState extends State<CountDownTimer> {
                                         height: 10.0,
                                       ),
                                       Text(
-                                        "3",
+                                        "$placarA",
                                         style: TextStyle(fontSize: 50.0),
                                       ),
                                       Row(
@@ -122,7 +123,11 @@ class _CountDownTimerState extends State<CountDownTimer> {
                                             height: 50,
                                             width: 50,
                                             child: FlatButton(
-                                              onPressed: () {},
+                                              onPressed: () {
+                                                setState(() {
+                                                  placarA++;
+                                                });
+                                              },
                                               child: Image.asset(
                                                 'assets/images/bolaFut.png',
                                                 height: 45,
@@ -137,7 +142,13 @@ class _CountDownTimerState extends State<CountDownTimer> {
                                             height: 50,
                                             width: 50,
                                             child: FlatButton(
-                                              onPressed: () {},
+                                              onPressed: () {
+                                                 setState(() {
+                                                  if(placarA != 0){
+                                                    placarA--;
+                                                  }
+                                                });
+                                              },
                                               child: Image.asset(
                                                 'assets/images/anuladoFut.png',
                                                 height: 45,
@@ -174,7 +185,7 @@ class _CountDownTimerState extends State<CountDownTimer> {
                                         height: 10.0,
                                       ),
                                       Text(
-                                        "2",
+                                        "$placarB",
                                         style: TextStyle(fontSize: 50.0),
                                       ),
                                       Row(
@@ -183,7 +194,11 @@ class _CountDownTimerState extends State<CountDownTimer> {
                                             height: 50,
                                             width: 50,
                                             child: FlatButton(
-                                              onPressed: () {},
+                                              onPressed: () {
+                                                setState(() {
+                                                  placarB++;
+                                                });
+                                              },
                                               child: Image.asset(
                                                 'assets/images/bolaFut.png',
                                                 height: 45,
@@ -198,7 +213,13 @@ class _CountDownTimerState extends State<CountDownTimer> {
                                             height: 50,
                                             width: 50,
                                             child: FlatButton(
-                                              onPressed: () {},
+                                              onPressed: () {
+                                                setState(() {
+                                                  if(placarB != 0){
+                                                    placarB--;
+                                                  }
+                                                });
+                                              },
                                               child: Image.asset(
                                                 'assets/images/anuladoFut.png',
                                                 height: 45,
@@ -231,7 +252,7 @@ class _CountDownTimerState extends State<CountDownTimer> {
                                       color: Colors.white, fontSize: 22.0),
                                 ),
                               ),
-                              onPressed: _StartTimer,
+                              onPressed: _startTimer,
                             ),
                           ),
                         ],
