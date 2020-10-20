@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:randomfut/pages/listaPlayerTeam.dart';
 import 'package:randomfut/pages/modo.page.dart';
 import 'package:randomfut/pages/timer.page.dart';
 
@@ -109,7 +110,14 @@ class LoginPage extends StatelessWidget {
               height: 55,
               width: 310,
               child: RaisedButton(
-                onPressed: () => {},
+                onPressed: () => {
+                  Navigator.pushReplacement(
+                      context,
+                      MaterialPageRoute(
+                        builder: (context) => ListaPlayerTeam(),
+                      ),
+                    )
+                },
                 elevation: 8,
                 shape: new RoundedRectangleBorder(
                     borderRadius: new BorderRadius.circular(30.0)),

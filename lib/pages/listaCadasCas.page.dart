@@ -4,11 +4,15 @@ import 'package:randomfut/provider/players.dart';
 import 'package:provider/provider.dart';
 import 'package:randomfut/routes/app_routes.dart';
 
-class ListaCadasCas extends StatelessWidget {
+class ListaCadasCas extends StatefulWidget {
+  @override
+  _ListaCadasCasState createState() => _ListaCadasCasState();
+}
+
+class _ListaCadasCasState extends State<ListaCadasCas> {
   @override
   Widget build(BuildContext context) {
     final Players players = Provider.of(context);
-
     return Scaffold(
       backgroundColor: Color(0xFF41BC3F),
       appBar: AppBar(
@@ -25,6 +29,9 @@ class ListaCadasCas extends StatelessWidget {
             ),
           ),
         ],
+        centerTitle: true,
+        title: Text("Selecionados: vr/vr"),
+        leading: Image.asset('./assets/images/iconeJogador.png'),
         backgroundColor: Color(0xFF008000),
         elevation: 0,
       ),

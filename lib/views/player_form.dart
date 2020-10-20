@@ -29,10 +29,8 @@ class _PlayerFormState extends State<PlayerForm> {
   void teste(Player player) {
     if (_formData['rate'] != null) {
       rating = player.rate;
-      print('Deu certo');
     } else {
       rating = 0.0;
-      print('NAAAAAAAAAAAAAAAAAOOOOOOOOO');
     }
   }
 
@@ -100,7 +98,7 @@ class _PlayerFormState extends State<PlayerForm> {
                 height: 40,
               ),
               FormField(
-                builder: (context) {
+                builder: (_) {
                   return SmoothStarRating(
                       allowHalfRating: false,
                       rating: rating,

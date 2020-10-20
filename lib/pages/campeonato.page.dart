@@ -44,7 +44,14 @@ class CampeonatoPage extends StatelessWidget {
               height: 55,
               width: 310,
               child: RaisedButton(
-                onPressed: () => {},
+                onPressed: () => {
+                  Navigator.push(
+                    context,
+                    MaterialPageRoute(
+                      builder: (context) => CampeonatoTipoPage(),
+                    ),
+                  )
+                },
                 elevation: 8,
                 shape: new RoundedRectangleBorder(
                     borderRadius: new BorderRadius.circular(30.0)),
@@ -62,13 +69,7 @@ class CampeonatoPage extends StatelessWidget {
               height: 55,
               width: 310,
               child: RaisedButton(
-                onPressed: () => {
-                  Navigator.push(
-                    context,
-                    MaterialPageRoute(
-                      builder: (context) => CampeonatoTipoPage(),
-                    ),
-                  )
+                onPressed: () => {   
                 },
                 elevation: 8,
                 shape: new RoundedRectangleBorder(

@@ -11,6 +11,8 @@ class CountDownTimer extends StatefulWidget {
 class _CountDownTimerState extends State<CountDownTimer> {
   int placarA = 0;
   int placarB = 0;
+  int min = 0;
+  int sec = 0;
 
   double percent = 0;
   static int timeInMinut =
@@ -18,25 +20,36 @@ class _CountDownTimerState extends State<CountDownTimer> {
   int timeInSec = timeInMinut * 60;
   Timer timer;
   void _startTimer() {
-    timeInMinut = 1;
+    min = timeInMinut;
     int time = timeInSec;
-    double secPercent = ((100/timeInSec)/100);
+    double secPercent = ((100 / timeInSec) / 100);
     print(secPercent);
     timer = Timer.periodic(Duration(seconds: 1), (timer) {
       setState(() {
         if (time > 0) {
           time--;
           timeInSec--;
+          if (timeInSec % 60 == 0) {
+            sec = 00;
+          } else {
+            if (sec == 00) {
+              min--;
+              sec = 60;
+            }
+            sec--;
+          }
           if (percent < 1) {
-            if((percent + secPercent) < 1){
+            if ((percent + secPercent) < 1) {
               percent += secPercent;
             }
-            } else {
-              percent = 1;
-            }
+          } else {
+            percent = 1;
+          }
         } else {
           percent = 0;
           timeInSec = 60;
+          min = timeInMinut;
+          sec = 00;
           timer.cancel();
         }
       });
@@ -74,7 +87,7 @@ class _CountDownTimerState extends State<CountDownTimer> {
                   radius: 200.0,
                   progressColor: Colors.white,
                   center: Text(
-                    "$timeInSec",
+                    "$min:$sec",
                     style: TextStyle(
                       color: Colors.white,
                       fontSize: 60.0,
@@ -143,8 +156,8 @@ class _CountDownTimerState extends State<CountDownTimer> {
                                             width: 50,
                                             child: FlatButton(
                                               onPressed: () {
-                                                 setState(() {
-                                                  if(placarA != 0){
+                                                setState(() {
+                                                  if (placarA != 0) {
                                                     placarA--;
                                                   }
                                                 });
@@ -215,7 +228,7 @@ class _CountDownTimerState extends State<CountDownTimer> {
                                             child: FlatButton(
                                               onPressed: () {
                                                 setState(() {
-                                                  if(placarB != 0){
+                                                  if (placarB != 0) {
                                                     placarB--;
                                                   }
                                                 });

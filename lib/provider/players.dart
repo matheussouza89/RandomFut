@@ -1,5 +1,4 @@
 import 'dart:math';
-
 import 'package:flutter/material.dart';
 import 'package:randomfut/data/dummy_players.dart';
 import 'package:randomfut/models/player.dart';

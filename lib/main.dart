@@ -1,7 +1,10 @@
 import 'package:flutter/material.dart';
+import 'package:randomfut/pages/listaCadasCamp.dart';
 import 'package:randomfut/pages/login.page.dart';
 import 'package:provider/provider.dart';
 import 'package:randomfut/provider/players.dart';
+import 'package:randomfut/provider/teams.dart';
+import 'package:randomfut/provider/playersTeam.dart';
 import 'package:randomfut/routes/app_routes.dart';
 import 'package:randomfut/views/player_form.dart';
 
@@ -16,6 +19,13 @@ class MyApp extends StatelessWidget {
         ChangeNotifierProvider(
           create: (ctx) => Players(),
         ),
+        ChangeNotifierProvider(
+          create: (ctx) => Teams(),
+        ),
+        ChangeNotifierProvider(
+          create: (ctx) => PlayersTeam(),
+        ),
+        
       ],
       child: MaterialApp(
         title: 'RandomFut',
@@ -32,6 +42,7 @@ class MyApp extends StatelessWidget {
           AppRoutes.LISTACADASCAS: (_) => LoginPage(),
           AppRoutes.MODO: (_) => LoginPage(),
           AppRoutes.PLAYERFORM: (_) => PlayerForm(),
+          AppRoutes.LISTACADASCAMP: (_) => ListaCadasCamp(),
         },
       ),
     );

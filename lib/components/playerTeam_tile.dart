@@ -1,33 +1,30 @@
 import 'package:flutter/material.dart';
-import 'package:randomfut/models/player.dart';
-import 'package:randomfut/provider/players.dart';
+import 'package:randomfut/models/playerTeam.dart';
+import 'package:randomfut/provider/playersTeam.dart';
 import 'package:randomfut/routes/app_routes.dart';
 import 'package:provider/provider.dart';
 import 'package:smooth_star_rating/smooth_star_rating.dart';
 
-class PlayerTile extends StatefulWidget {
-  final Player player;
+class PlayerTeamTile extends StatefulWidget {
+  final PlayerTeam playerTeam;
 
-  const PlayerTile(this.player);
+  const PlayerTeamTile(this.playerTeam);
 
   @override
-  _PlayerTileState createState() => _PlayerTileState();
+  _PlayerTeamTileState createState() => _PlayerTeamTileState();
 }
 
-class _PlayerTileState extends State<PlayerTile> {
-  var isSelected = false;
-  var seletion = 0xFF41BC3F;
-  var aux = 0;
-  var tittleCont = "Jogares selecionados: /10";
+class _PlayerTeamTileState extends State<PlayerTeamTile> {
   @override
   Widget build(BuildContext context) {
-    final avatar = widget.player.avatar == null || widget.player.avatar.isEmpty
+    final avatar = widget.playerTeam.avatar == null ||
+            widget.playerTeam.avatar.isEmpty
         ? CircleAvatar(child: Image.asset('./assets/images/emptyPlayer.png'))
         : CircleAvatar(
-            child: Image.asset(widget.player.avatar),
+            child: Image.asset(widget.playerTeam.avatar),
           ); //Mudar Aqui para colocar a imagem do Usuario
     return Container(
-      color: Color(seletion),
+      color: Color(0xFF41BC3F),
       child: Column(
         children: [
           ListTile(
@@ -38,12 +35,12 @@ class _PlayerTileState extends State<PlayerTile> {
                 child: avatar,
               ),
             ),
-            title: Text(widget.player.name),
+            title: Text(widget.playerTeam.name),
             subtitle: Container(
               child: Column(
                 children: [
                   Align(
-                    child: Text(widget.player.position),
+                    child: Text(widget.playerTeam.position),
                     alignment: Alignment.centerLeft,
                   ),
                   Align(
@@ -55,7 +52,7 @@ class _PlayerTileState extends State<PlayerTile> {
                         filledIconData: Icons.star,
                         halfFilledIconData: Icons.star_half,
                         defaultIconData: Icons.star_border,
-                        rating: widget.player.rate,
+                        rating: widget.playerTeam.rate,
                         color: Colors.yellow,
                         borderColor: Colors.yellow,
                         spacing: 0.0),
@@ -66,7 +63,6 @@ class _PlayerTileState extends State<PlayerTile> {
               alignment: Alignment.centerLeft,
             ),
             isThreeLine: true,
-            onLongPress: toggleSelection,
             trailing: Container(
               width: 100,
               child: Row(
@@ -76,7 +72,7 @@ class _PlayerTileState extends State<PlayerTile> {
                     onPressed: () {
                       Navigator.of(context).pushNamed(
                         AppRoutes.PLAYERFORM,
-                        arguments: widget.player,
+                        arguments: widget.playerTeam,
                       );
                     },
                   ),
@@ -99,8 +95,8 @@ class _PlayerTileState extends State<PlayerTile> {
                             FlatButton(
                               onPressed: () {
                                 Navigator.of(context).pop();
-                                Provider.of<Players>(context, listen: false)
-                                    .remove(widget.player);
+                                Provider.of<PlayersTeam>(context, listen: false)
+                                    .remove(widget.playerTeam);
                               },
                               child: Text('Sim'),
                             ),
@@ -123,17 +119,5 @@ class _PlayerTileState extends State<PlayerTile> {
         ],
       ),
     );
-  }
-
-  void toggleSelection() {
-    setState(() {
-      if (isSelected) {
-        isSelected = false;
-        seletion = 0xFF41BC3F;
-      } else {
-        isSelected = true;
-        seletion = 0xFF6ECE6C;
-      }
-    });
   }
 }

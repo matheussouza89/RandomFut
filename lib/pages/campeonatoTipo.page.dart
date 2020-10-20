@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:randomfut/pages/listaCadasCamp.dart';
 
 class CampeonatoTipoPage extends StatelessWidget {
   @override
@@ -43,7 +44,14 @@ class CampeonatoTipoPage extends StatelessWidget {
               height: 80,
               width: 310,
               child: RaisedButton(
-                onPressed: () => {},
+                onPressed: () => {
+                  Navigator.push(
+                    context,
+                    MaterialPageRoute(
+                      builder: (context) => ListaCadasCamp(),
+                    ),
+                  )
+                },
                 elevation: 8,
                 shape: new RoundedRectangleBorder(
                     borderRadius: new BorderRadius.circular(50.0)),
@@ -63,12 +71,6 @@ class CampeonatoTipoPage extends StatelessWidget {
               width: 310,
               child: RaisedButton(
                 onPressed: () => {
-                  Navigator.push(
-                    context,
-                    MaterialPageRoute(
-                      builder: (context) => CampeonatoTipoPage(),
-                    ),
-                  )
                 },
                 elevation: 8,
                 shape: new RoundedRectangleBorder(

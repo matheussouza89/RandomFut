@@ -1,30 +1,31 @@
 import 'package:flutter/material.dart';
-import 'package:randomfut/models/player.dart';
-import 'package:randomfut/provider/players.dart';
+import 'package:randomfut/models/team.dart';
+import 'package:randomfut/pages/listaPlayerTeam.dart';
+import 'package:randomfut/provider/teams.dart';
 import 'package:randomfut/routes/app_routes.dart';
 import 'package:provider/provider.dart';
 import 'package:smooth_star_rating/smooth_star_rating.dart';
 
-class PlayerTile extends StatefulWidget {
-  final Player player;
+class TeamTile extends StatefulWidget {
+  final Team team;
 
-  const PlayerTile(this.player);
+  const TeamTile(this.team);
 
   @override
-  _PlayerTileState createState() => _PlayerTileState();
+  _TeamTileState createState() => _TeamTileState();
 }
 
-class _PlayerTileState extends State<PlayerTile> {
+class _TeamTileState extends State<TeamTile> {
   var isSelected = false;
   var seletion = 0xFF41BC3F;
   var aux = 0;
   var tittleCont = "Jogares selecionados: /10";
   @override
   Widget build(BuildContext context) {
-    final avatar = widget.player.avatar == null || widget.player.avatar.isEmpty
+    final avatar = widget.team.avatar == null || widget.team.avatar.isEmpty
         ? CircleAvatar(child: Image.asset('./assets/images/emptyPlayer.png'))
         : CircleAvatar(
-            child: Image.asset(widget.player.avatar),
+            child: Image.asset(widget.team.avatar),
           ); //Mudar Aqui para colocar a imagem do Usuario
     return Container(
       color: Color(seletion),
@@ -38,14 +39,10 @@ class _PlayerTileState extends State<PlayerTile> {
                 child: avatar,
               ),
             ),
-            title: Text(widget.player.name),
+            title: Text(widget.team.name),
             subtitle: Container(
               child: Column(
                 children: [
-                  Align(
-                    child: Text(widget.player.position),
-                    alignment: Alignment.centerLeft,
-                  ),
                   Align(
                     child: SmoothStarRating(
                         allowHalfRating: false,
@@ -55,7 +52,7 @@ class _PlayerTileState extends State<PlayerTile> {
                         filledIconData: Icons.star,
                         halfFilledIconData: Icons.star_half,
                         defaultIconData: Icons.star_border,
-                        rating: widget.player.rate,
+                        rating: widget.team.rate,
                         color: Colors.yellow,
                         borderColor: Colors.yellow,
                         spacing: 0.0),
@@ -65,20 +62,21 @@ class _PlayerTileState extends State<PlayerTile> {
               ),
               alignment: Alignment.centerLeft,
             ),
-            isThreeLine: true,
-            onLongPress: toggleSelection,
+            onTap: () {
+              Navigator.pushReplacement(
+                context,
+                MaterialPageRoute(
+                  builder: (context) => ListaPlayerTeam(),
+                ),
+              );
+            },
             trailing: Container(
               width: 100,
               child: Row(
                 children: [
                   IconButton(
                     icon: Icon(Icons.edit),
-                    onPressed: () {
-                      Navigator.of(context).pushNamed(
-                        AppRoutes.PLAYERFORM,
-                        arguments: widget.player,
-                      );
-                    },
+                    onPressed: () {},
                   ),
                   IconButton(
                     icon: Icon(Icons.delete),
@@ -86,9 +84,9 @@ class _PlayerTileState extends State<PlayerTile> {
                       showDialog(
                         context: context,
                         builder: (ctx) => AlertDialog(
-                          title: Text('Excluir Jogador'),
-                          content: Text(
-                              'Tem certeza que quer excluir este jogador?'),
+                          title: Text('Excluir Time'),
+                          content:
+                              Text('Tem certeza que quer excluir este time?'),
                           actions: [
                             FlatButton(
                               onPressed: () {
@@ -99,8 +97,8 @@ class _PlayerTileState extends State<PlayerTile> {
                             FlatButton(
                               onPressed: () {
                                 Navigator.of(context).pop();
-                                Provider.of<Players>(context, listen: false)
-                                    .remove(widget.player);
+                                Provider.of<Teams>(context, listen: false)
+                                    .remove(widget.team);
                               },
                               child: Text('Sim'),
                             ),
