@@ -23,6 +23,7 @@ class _PlayerFormState extends State<PlayerForm> {
       _formData['position'] = player.position;
       _formData['avatar'] = player.avatar;
       _formData['rate'] = player.rate;
+      _formData['cor'] = player.cor;
     }
   }
 

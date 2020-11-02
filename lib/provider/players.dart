@@ -34,10 +34,14 @@ class Players with ChangeNotifier {
           position: player.position,
           avatar: player.avatar,
           rate: player.rate,
+          checked: player.checked,
+          cor: player.cor,
         ),
       );
     } else {
       final id = Random().nextDouble().toString();
+      final checked = false;
+      final cor = 0xFF41BC3F;
       _items.putIfAbsent(
         id,
         () => Player(
@@ -46,6 +50,8 @@ class Players with ChangeNotifier {
           position: player.position,
           avatar: player.avatar,
           rate: player.rate,
+          checked: checked,
+          cor: cor,
         ),
       );
     }

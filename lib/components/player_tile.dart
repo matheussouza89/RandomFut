@@ -5,6 +5,13 @@ import 'package:randomfut/routes/app_routes.dart';
 import 'package:provider/provider.dart';
 import 'package:smooth_star_rating/smooth_star_rating.dart';
 
+var notSelected = true;
+var isShowing = false;
+var selection = 0xFF41BC3F;
+var tCas = Titulo();
+var tittleCont = "";
+var jgdr;
+
 class PlayerTile extends StatefulWidget {
   final Player player;
 
@@ -15,10 +22,20 @@ class PlayerTile extends StatefulWidget {
 }
 
 class _PlayerTileState extends State<PlayerTile> {
-  var isSelected = false;
-  var seletion = 0xFF41BC3F;
-  var aux = 0;
-  var tittleCont = "Jogares selecionados: /10";
+  final Map<String, Object> _formData = {};
+
+  void _loadFormData(Player player) {
+    if (player != null) {
+      _formData['id'] = player.id;
+      _formData['name'] = player.name;
+      _formData['position'] = player.position;
+      _formData['avatar'] = player.avatar;
+      _formData['rate'] = player.rate;
+      _formData['checked'] = player.checked;
+      _formData['cor'] = player.cor;
+    }
+  }
+
   @override
   Widget build(BuildContext context) {
     final avatar = widget.player.avatar == null || widget.player.avatar.isEmpty
@@ -27,7 +44,7 @@ class _PlayerTileState extends State<PlayerTile> {
             child: Image.asset(widget.player.avatar),
           ); //Mudar Aqui para colocar a imagem do Usuario
     return Container(
-      color: Color(seletion),
+      color: Color(widget.player.cor),
       child: Column(
         children: [
           ListTile(
@@ -66,51 +83,68 @@ class _PlayerTileState extends State<PlayerTile> {
               alignment: Alignment.centerLeft,
             ),
             isThreeLine: true,
-            onLongPress: toggleSelection,
-            trailing: Container(
-              width: 100,
-              child: Row(
-                children: [
-                  IconButton(
-                    icon: Icon(Icons.edit),
-                    onPressed: () {
-                      Navigator.of(context).pushNamed(
-                        AppRoutes.PLAYERFORM,
-                        arguments: widget.player,
-                      );
-                    },
-                  ),
-                  IconButton(
-                    icon: Icon(Icons.delete),
-                    onPressed: () {
-                      showDialog(
-                        context: context,
-                        builder: (ctx) => AlertDialog(
-                          title: Text('Excluir Jogador'),
-                          content: Text(
-                              'Tem certeza que quer excluir este jogador?'),
-                          actions: [
-                            FlatButton(
-                              onPressed: () {
-                                Navigator.of(context).pop();
-                              },
-                              child: Text('Não'),
-                            ),
-                            FlatButton(
-                              onPressed: () {
-                                Navigator.of(context).pop();
-                                Provider.of<Players>(context, listen: false)
-                                    .remove(widget.player);
-                              },
-                              child: Text('Sim'),
-                            ),
-                          ],
-                        ),
-                      );
-                    },
-                    color: Colors.red,
-                  )
-                ],
+            onLongPress: () {
+              print(_formData['checked']);
+              toggleSelection();
+              Provider.of<Players>(context, listen: false).put(
+                Player(
+                  id: _formData['id'],
+                  name: _formData['name'],
+                  position: _formData['position'],
+                  avatar: _formData['avatar'],
+                  rate: _formData['rate'],
+                  checked: _formData['checked'],
+                  cor: _formData['cor'],
+                ),
+              );
+            },
+            trailing: Visibility(
+              visible: notSelected,
+              child: Container(
+                width: 100,
+                child: Row(
+                  children: [
+                    IconButton(
+                      icon: Icon(Icons.edit),
+                      onPressed: () {
+                        Navigator.of(context).pushNamed(
+                          AppRoutes.PLAYERFORM,
+                          arguments: widget.player,
+                        );
+                      },
+                    ),
+                    IconButton(
+                      icon: Icon(Icons.delete),
+                      onPressed: () {
+                        showDialog(
+                          context: context,
+                          builder: (ctx) => AlertDialog(
+                            title: Text('Excluir Jogador'),
+                            content: Text(
+                                'Tem certeza que quer excluir este jogador?'),
+                            actions: [
+                              FlatButton(
+                                onPressed: () {
+                                  Navigator.of(context).pop();
+                                },
+                                child: Text('Não'),
+                              ),
+                              FlatButton(
+                                onPressed: () {
+                                  Navigator.of(context).pop();
+                                  Provider.of<Players>(context, listen: false)
+                                      .remove(widget.player);
+                                },
+                                child: Text('Sim'),
+                              ),
+                            ],
+                          ),
+                        );
+                      },
+                      color: Colors.red,
+                    )
+                  ],
+                ),
               ),
             ),
           ),
@@ -126,14 +160,53 @@ class _PlayerTileState extends State<PlayerTile> {
   }
 
   void toggleSelection() {
+    _loadFormData(widget.player);
     setState(() {
-      if (isSelected) {
-        isSelected = false;
-        seletion = 0xFF41BC3F;
+      print(widget.player.checked);
+      if (tCas._jogadorS < 3) {
+        if (widget.player.checked == false) {
+          _formData['checked'] = true;
+          _formData['cor'] = 0xFF6ECE6C;
+          tCas.contCres();
+          jgdr = tCas._jogadorS;
+          tittleCont = "Selecionados: $jgdr/10";
+        } else {
+          _formData['checked'] = false;
+          _formData['cor'] = 0xFF41BC3F;
+          tCas.contDecres();
+          jgdr = tCas._jogadorS;
+          tittleCont = "Selecionados: $jgdr/10";
+        }
+        if (tCas._jogadorS == 0) {
+          tittleCont = "";
+        }
+      }
+      if ((widget.player.checked == true) && (tCas._jogadorS == 3)) {
+        _formData['checked'] = false;
+        _formData['cor'] = 0xFF41BC3F;
+        tCas.contDecres();
+        jgdr = tCas._jogadorS;
+        tittleCont = "Selecionados: $jgdr/10";
+      }
+      if (tCas._jogadorS <= 0) {
+        notSelected = true;
+        isShowing = false;
       } else {
-        isSelected = true;
-        seletion = 0xFF6ECE6C;
+        notSelected = false;
+        isShowing = true;
       }
     });
+  }
+}
+
+class Titulo {
+  int _jogadorS = 0;
+
+  void contCres() {
+    this._jogadorS = _jogadorS + 1;
+  }
+
+  void contDecres() {
+    this._jogadorS = _jogadorS - 1;
   }
 }

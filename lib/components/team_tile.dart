@@ -2,7 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:randomfut/models/team.dart';
 import 'package:randomfut/pages/listaPlayerTeam.dart';
 import 'package:randomfut/provider/teams.dart';
-import 'package:randomfut/routes/app_routes.dart';
 import 'package:provider/provider.dart';
 import 'package:smooth_star_rating/smooth_star_rating.dart';
 

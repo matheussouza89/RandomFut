@@ -1,9 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:randomfut/components/team_tile.dart';
-import 'package:randomfut/data/dummy_teams.dart';
 import 'package:randomfut/provider/teams.dart';
 import 'package:provider/provider.dart';
-import 'package:randomfut/routes/app_routes.dart';
 
 class ListaCadasCamp extends StatefulWidget {
   @override

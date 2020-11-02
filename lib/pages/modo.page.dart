@@ -1,8 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:randomfut/pages/listaCadasCamp.dart';
 import 'package:randomfut/pages/listaCadasCas.page.dart';
-import 'casual.page.dart';
-import 'campeonato.page.dart';
 
 class ModoPage extends StatelessWidget {
   @override

@@ -7,6 +7,8 @@ const DUMMY_PLAYERS = {
     position: "Atacante",
     avatar: null,
     rate: 5.0,
+    checked: false,
+    cor: 0xFF41BC3F,
   ),
   '2': const Player(
     id: '2',
@@ -14,6 +16,8 @@ const DUMMY_PLAYERS = {
     position: "Zagueiro",
     avatar: null,
     rate: 1.0,
+    checked: false,
+    cor: 0xFF41BC3F,
   ),
   '3': const Player(
     id: '3',
@@ -21,5 +25,7 @@ const DUMMY_PLAYERS = {
     position: "Goleiro",
     avatar: null,
     rate: 2.0,
+    checked: false,
+    cor: 0xFF41BC3F,
   )
 };
