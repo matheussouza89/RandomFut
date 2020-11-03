@@ -60,6 +60,8 @@ class _PlayerFormState extends State<PlayerForm> {
                     position: _formData['position'],
                     avatar: null,
                     rate: _formData['rate'],
+                    checked: _formData['checked'],
+                    cor: _formData['cor'],
                   ),
                 );
 

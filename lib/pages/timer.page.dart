@@ -2,6 +2,7 @@ import 'dart:async';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:percent_indicator/circular_percent_indicator.dart';
+import 'package:randomfut/views/config_Tempo.dart';
 
 class CountDownTimer extends StatefulWidget {
   @override
@@ -16,7 +17,7 @@ class _CountDownTimerState extends State<CountDownTimer> {
 
   double percent = 0;
   static int timeInMinut =
-      1; //Adicionar aqui a variável de tempo que o usuário digitar
+      int.parse(tempoJogo); //Adicionar aqui a variável de tempo que o usuário digitar
   int timeInSec = timeInMinut * 60;
   Timer timer;
   void _startTimer() {

@@ -1,9 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_speed_dial/flutter_speed_dial.dart';
 import 'package:randomfut/components/player_tile.dart';
+import 'package:randomfut/pages/timer.page.dart';
 import 'package:randomfut/provider/players.dart';
 import 'package:provider/provider.dart';
 import 'package:randomfut/routes/app_routes.dart';
+import 'package:randomfut/views/config_Tempo.dart';
+import 'package:randomfut/views/config_Time.dart';
 
 class ListaCadasCas extends StatefulWidget {
   @override
@@ -47,20 +50,39 @@ class _ListaCadasCasState extends State<ListaCadasCas> {
           animatedIcon: AnimatedIcons.menu_close,
           children: [
             SpeedDialChild(
-              child: Icon(Icons.people),
-              onTap: () {},
-              backgroundColor: Color(0xFF008000),
-              label: 'Config. Time'
-            ),
+                child: Icon(Icons.people),
+                onTap: () {
+                  Navigator.push(
+                    context,
+                    MaterialPageRoute(
+                      builder: (context) => ConfigTime(),
+                    ),
+                  );
+                },
+                backgroundColor: Color(0xFF008000),
+                label: 'Config. Time'),
             SpeedDialChild(
-              child: Icon(Icons.access_time),
-              onTap: () {},
-              backgroundColor: Color(0xFF008000),
-              label: 'Config. Tempo'
-            ),
+                child: Icon(Icons.access_time),
+                onTap: () {
+                  Navigator.push(
+                    context,
+                    MaterialPageRoute(
+                      builder: (context) => ConfigTempo(),
+                    ),
+                  );
+                },
+                backgroundColor: Color(0xFF008000),
+                label: 'Config. Tempo'),
             SpeedDialChild(
               child: Icon(Icons.sync),
-              onTap: () {},
+              onTap: () {
+                Navigator.push(
+                    context,
+                    MaterialPageRoute(
+                      builder: (context) => CountDownTimer(),
+                    ),
+                  );
+              },
               backgroundColor: Color(0xFF008000),
               label: 'Sortear',
             ),

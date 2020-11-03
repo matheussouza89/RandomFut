@@ -3,6 +3,7 @@ import 'package:randomfut/models/player.dart';
 import 'package:randomfut/provider/players.dart';
 import 'package:randomfut/routes/app_routes.dart';
 import 'package:provider/provider.dart';
+import 'package:randomfut/views/config_Time.dart';
 import 'package:smooth_star_rating/smooth_star_rating.dart';
 
 var notSelected = true;
@@ -163,30 +164,30 @@ class _PlayerTileState extends State<PlayerTile> {
     _loadFormData(widget.player);
     setState(() {
       print(widget.player.checked);
-      if (tCas._jogadorS < 3) {
+      if (tCas._jogadorS < int.parse(nJogadores)) {
         if (widget.player.checked == false) {
           _formData['checked'] = true;
           _formData['cor'] = 0xFF6ECE6C;
           tCas.contCres();
           jgdr = tCas._jogadorS;
-          tittleCont = "Selecionados: $jgdr/10";
+          tittleCont = "Selecionados: $jgdr/$nJogadores";
         } else {
           _formData['checked'] = false;
           _formData['cor'] = 0xFF41BC3F;
           tCas.contDecres();
           jgdr = tCas._jogadorS;
-          tittleCont = "Selecionados: $jgdr/10";
+          tittleCont = "Selecionados: $jgdr/$nJogadores";
         }
         if (tCas._jogadorS == 0) {
           tittleCont = "";
         }
       }
-      if ((widget.player.checked == true) && (tCas._jogadorS == 3)) {
+      if ((widget.player.checked == true) && (tCas._jogadorS == int.parse(nJogadores))) {
         _formData['checked'] = false;
         _formData['cor'] = 0xFF41BC3F;
         tCas.contDecres();
         jgdr = tCas._jogadorS;
-        tittleCont = "Selecionados: $jgdr/10";
+        tittleCont = "Selecionados: $jgdr/$nJogadores";
       }
       if (tCas._jogadorS <= 0) {
         notSelected = true;
