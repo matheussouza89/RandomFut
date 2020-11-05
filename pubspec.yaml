@@ -32,7 +32,9 @@ dependencies:
   smooth_star_rating: 1.1.1
   percent_indicator: "^2.1.5"
   flutter_speed_dial: ^1.2.5
-  
+  path:
+  path_provider:
+  sqflite:
 
 dev_dependencies:
   flutter_test:
