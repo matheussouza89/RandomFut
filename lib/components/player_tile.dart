@@ -12,6 +12,7 @@ var selection = 0xFF41BC3F;
 var tCas = Titulo();
 var tittleCont = "";
 var jgdr;
+var vetJogador = [];
 
 class PlayerTile extends StatefulWidget {
   final Player player;
@@ -171,18 +172,28 @@ class _PlayerTileState extends State<PlayerTile> {
           tCas.contCres();
           jgdr = tCas._jogadorS;
           tittleCont = "Selecionados: $jgdr/$nJogadores";
+          vetJogador.add(widget.player.name);
+          print(vetJogador);
         } else {
           _formData['checked'] = false;
           _formData['cor'] = 0xFF41BC3F;
           tCas.contDecres();
           jgdr = tCas._jogadorS;
           tittleCont = "Selecionados: $jgdr/$nJogadores";
+          for (var i = 0; i < vetJogador.length; i++) {
+            if (vetJogador[i] == widget.player.name) {
+              vetJogador.removeAt(i);
+              i = vetJogador.length;
+            }
+          }
+          print(vetJogador);
         }
         if (tCas._jogadorS == 0) {
           tittleCont = "";
         }
       }
-      if ((widget.player.checked == true) && (tCas._jogadorS == int.parse(nJogadores))) {
+      if ((widget.player.checked == true) &&
+          (tCas._jogadorS == int.parse(nJogadores))) {
         _formData['checked'] = false;
         _formData['cor'] = 0xFF41BC3F;
         tCas.contDecres();

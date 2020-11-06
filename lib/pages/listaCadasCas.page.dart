@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_speed_dial/flutter_speed_dial.dart';
+import 'package:randomfut/algorithms/sorteio.dart';
 import 'package:randomfut/components/player_tile.dart';
 import 'package:randomfut/pages/timer.page.dart';
 import 'package:randomfut/provider/players.dart';
@@ -76,12 +77,7 @@ class _ListaCadasCasState extends State<ListaCadasCas> {
             SpeedDialChild(
               child: Icon(Icons.sync),
               onTap: () {
-                Navigator.push(
-                    context,
-                    MaterialPageRoute(
-                      builder: (context) => CountDownTimer(),
-                    ),
-                  );
+                sorteio();
               },
               backgroundColor: Color(0xFF008000),
               label: 'Sortear',
