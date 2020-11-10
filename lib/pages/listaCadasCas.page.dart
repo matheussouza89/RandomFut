@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_speed_dial/flutter_speed_dial.dart';
 import 'package:randomfut/algorithms/sorteio.dart';
 import 'package:randomfut/components/player_tile.dart';
+import 'package:randomfut/pages/sorteadosCas.dart';
 import 'package:randomfut/pages/timer.page.dart';
 import 'package:randomfut/provider/players.dart';
 import 'package:provider/provider.dart';
@@ -78,6 +79,12 @@ class _ListaCadasCasState extends State<ListaCadasCas> {
               child: Icon(Icons.sync),
               onTap: () {
                 sorteio();
+                Navigator.push(
+                  context,
+                  MaterialPageRoute(
+                    builder: (context) => SorteadosCas(),
+                  ),
+                );
               },
               backgroundColor: Color(0xFF008000),
               label: 'Sortear',
