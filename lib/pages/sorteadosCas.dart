@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:randomfut/algorithms/sorteio.dart';
+import 'package:randomfut/pages/timer.page.dart';
 
 class SorteadosCas extends StatefulWidget {
   @override
@@ -40,6 +41,18 @@ class _SorteadosCasState extends State<SorteadosCas> {
                 },
               ),
               height: 300,
+            ),
+            Container(
+              child: RaisedButton(child: Text("Ir para Partida"),
+              onPressed: (){
+                Navigator.push(
+                    context,
+                    MaterialPageRoute(
+                      builder: (context) => CountDownTimer(),
+                    ),
+                  );
+              },
+              color: Color(0xFF008000),),
             ),
           ],
         ),

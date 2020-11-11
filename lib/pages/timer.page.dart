@@ -3,6 +3,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:percent_indicator/circular_percent_indicator.dart';
 import 'package:randomfut/views/config_Tempo.dart';
+import 'package:intl/intl.dart';
 
 class CountDownTimer extends StatefulWidget {
   @override
@@ -10,17 +11,21 @@ class CountDownTimer extends StatefulWidget {
 }
 
 class _CountDownTimerState extends State<CountDownTimer> {
+  NumberFormat formatter = NumberFormat("00.##");
   int placarA = 0;
   int placarB = 0;
-  int min = 0;
   int sec = 0;
-
+  bool isRunning = false;
+  bool start = true;
   double percent = 0;
-  static int timeInMinut =
-      int.parse(tempoJogo); //Adicionar aqui a variável de tempo que o usuário digitar
+  static int timeInMinut = int.parse(
+      tempoJogo); //Adicionar aqui a variável de tempo que o usuário digitar
+  int min = timeInMinut;
   int timeInSec = timeInMinut * 60;
   Timer timer;
   void _startTimer() {
+    isRunning = true;
+    start = false;
     min = timeInMinut;
     int time = timeInSec;
     double secPercent = ((100 / timeInSec) / 100);
@@ -46,10 +51,13 @@ class _CountDownTimerState extends State<CountDownTimer> {
           } else {
             percent = 1;
           }
+          formatter.format(min);
+          formatter.format(sec);
+          print(formatter.format(min));
         } else {
           percent = 0;
           timeInSec = 60;
-          min = timeInMinut;
+          min = 00;
           sec = 00;
           timer.cancel();
         }
@@ -88,7 +96,7 @@ class _CountDownTimerState extends State<CountDownTimer> {
                   radius: 200.0,
                   progressColor: Colors.white,
                   center: Text(
-                    "$min:$sec",
+                    "${formatter.format(min)}:${formatter.format(sec)}",
                     style: TextStyle(
                       color: Colors.white,
                       fontSize: 60.0,
@@ -251,22 +259,48 @@ class _CountDownTimerState extends State<CountDownTimer> {
                               ],
                             ),
                           ),
-                          Padding(
-                            padding: EdgeInsets.symmetric(vertical: 28.0),
-                            child: RaisedButton(
-                              color: Color(0xFF008000),
-                              shape: RoundedRectangleBorder(
-                                borderRadius: BorderRadius.circular(100.0),
-                              ),
-                              child: Padding(
-                                padding: EdgeInsets.all(20.0),
-                                child: Text(
-                                  "Finalizar partida",
-                                  style: TextStyle(
-                                      color: Colors.white, fontSize: 22.0),
+                          Visibility(
+                            visible: isRunning,
+                            child: Padding(
+                              padding: EdgeInsets.symmetric(vertical: 28.0),
+                              child: RaisedButton(
+                                color: Color(0xFF008000),
+                                shape: RoundedRectangleBorder(
+                                  borderRadius: BorderRadius.circular(100.0),
                                 ),
+                                child: Padding(
+                                  padding: EdgeInsets.all(20.0),
+                                  child: Text(
+                                    "Finalizar partida",
+                                    style: TextStyle(
+                                        color: Colors.white, fontSize: 22.0),
+                                  ),
+                                ),
+                                onPressed: () {
+                                  Navigator.of(context).pop();
+                                },
                               ),
-                              onPressed: _startTimer,
+                            ),
+                          ),
+                          Visibility(
+                            visible: start,
+                            child: Padding(
+                              padding: EdgeInsets.symmetric(vertical: 28.0),
+                              child: RaisedButton(
+                                color: Color(0xFF008000),
+                                shape: RoundedRectangleBorder(
+                                  borderRadius: BorderRadius.circular(100.0),
+                                ),
+                                child: Padding(
+                                  padding: EdgeInsets.all(20.0),
+                                  child: Text(
+                                    "Iniciar Partida",
+                                    style: TextStyle(
+                                        color: Colors.white, fontSize: 22.0),
+                                  ),
+                                ),
+                                onPressed: _startTimer,
+                              ),
                             ),
                           ),
                         ],

@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 
-var tempoJogo;
+var tempoJogo = "3";
 
 class ConfigTempo extends StatelessWidget {
   final _formTempo = GlobalKey<FormState>();

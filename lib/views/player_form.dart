@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:randomfut/models/player.dart';
+import 'package:randomfut/pages/listaCadasCas.page.dart';
 import 'package:randomfut/provider/players.dart';
 import 'package:provider/provider.dart';
 import 'package:smooth_star_rating/smooth_star_rating.dart';
@@ -32,6 +33,7 @@ class _PlayerFormState extends State<PlayerForm> {
       rating = player.rate;
     } else {
       rating = 0.0;
+      print(_formData['rate'] == null);
     }
   }
 
@@ -50,9 +52,9 @@ class _PlayerFormState extends State<PlayerForm> {
             icon: Icon(Icons.save),
             onPressed: () {
               final isValid = _form.currentState.validate();
-
               if (isValid) {
                 _form.currentState.save();
+                _formData['rate'] = rating;
                 Provider.of<Players>(context, listen: false).put(
                   Player(
                     id: _formData['id'],
@@ -64,8 +66,19 @@ class _PlayerFormState extends State<PlayerForm> {
                     cor: _formData['cor'],
                   ),
                 );
-
+                Navigator.pop(
+                  context,
+                  MaterialPageRoute(
+                    builder: (context) => ListaCadasCas(),
+                  ),
+                );
                 Navigator.of(context).pop();
+                Navigator.push(
+                  context,
+                  MaterialPageRoute(
+                    builder: (context) => ListaCadasCas(),
+                  ),
+                );
               }
             },
           )
@@ -100,27 +113,22 @@ class _PlayerFormState extends State<PlayerForm> {
               SizedBox(
                 height: 40,
               ),
-              FormField(
-                builder: (_) {
-                  return SmoothStarRating(
-                      allowHalfRating: false,
-                      rating: rating,
-                      onRated: (value) {
-                        print('rating value -> $value');
-                        rating = value;
-                      },
-                      starCount: 5,
-                      size: 40.0,
-                      isReadOnly: false,
-                      filledIconData: Icons.star,
-                      halfFilledIconData: Icons.star_half,
-                      defaultIconData: Icons.star_border,
-                      color: Colors.green,
-                      borderColor: Colors.green,
-                      spacing: 0.0);
-                },
-                onSaved: (value) => _formData['rate'] = rating,
-              ),
+              SmoothStarRating(
+                  allowHalfRating: false,
+                  rating: rating,
+                  onRated: (value) {
+                    rating = value;
+                    print('rating value -> $rating');
+                  },
+                  starCount: 5,
+                  size: 40.0,
+                  isReadOnly: false,
+                  filledIconData: Icons.star,
+                  halfFilledIconData: Icons.star_half,
+                  defaultIconData: Icons.star_border,
+                  color: Colors.green,
+                  borderColor: Colors.green,
+                  spacing: 0.0),
               SizedBox(
                 height: 40,
               ),
