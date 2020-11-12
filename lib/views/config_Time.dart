@@ -1,9 +1,30 @@
 import 'package:flutter/material.dart';
 
 var nJogadores = "10";
+var _decisao = ['Sim', 'Não'];
+var _itemSelecionado1 = 'Selecione a opção (opção padrão: Não)';
+var _itemSelecionado2 = 'Selecione a opção (opção padrão: Não)';
 
-class ConfigTime extends StatelessWidget {
+class ConfigTime extends StatefulWidget {
+  @override
+  _ConfigTimeState createState() => _ConfigTimeState();
+}
+
+class _ConfigTimeState extends State<ConfigTime> {
   final _formTime = GlobalKey<FormState>();
+
+  void _selecaoBalanceamento(String novoItem) {
+    setState(() {
+      _itemSelecionado1 = novoItem;
+    });
+  }
+
+  void _selecaoBasePosicao(String novoItem) {
+    setState(() {
+      _itemSelecionado2 = novoItem;
+    });
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -29,20 +50,32 @@ class ConfigTime extends StatelessWidget {
                 decoration: InputDecoration(labelText: 'Numero de Jogadores'),
                 onSaved: (value) => nJogadores = value,
               ),
-              TextFormField(
-                initialValue: "Não",
-                decoration: InputDecoration(labelText: 'Times Balanceados'),
-                onSaved: (value) => () {},
+              Text("Times Balanceados"),
+              DropdownButton(
+                items: _decisao.map((String dropDownStringItem) {
+                  return DropdownMenuItem<String>(
+                    value: dropDownStringItem,
+                    child: Text(dropDownStringItem),
+                  );
+                }).toList(),
+                onChanged: (String novoItemSelecionado) {
+                  _selecaoBalanceamento(novoItemSelecionado);
+                },
+                hint: Text(_itemSelecionado1),
               ),
-              TextFormField(
-                initialValue: "Não",
-                decoration:
-                    InputDecoration(labelText: 'Sorteio com Base na Posição'),
-                onSaved: (value) => () {},
-              ),
-              SizedBox(
-                height: 40,
-              ),
+              Text("Sorteio com Base na Posição"),
+              DropdownButton(
+                items: _decisao.map((String dropDownStringItem) {
+                  return DropdownMenuItem<String>(
+                    value: dropDownStringItem,
+                    child: Text(dropDownStringItem),
+                  );
+                }).toList(),
+                onChanged: (String novoItemSelecionado) {
+                  _selecaoBasePosicao(novoItemSelecionado);
+                },
+                hint: Text(_itemSelecionado2),
+              )
             ],
           ),
         ),
