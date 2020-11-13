@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_speed_dial/flutter_speed_dial.dart';
 import 'package:randomfut/algorithms/sorteio.dart';
 import 'package:randomfut/components/player_tile.dart';
+import 'package:randomfut/models/player.dart';
 import 'package:randomfut/pages/sorteadosCas.dart';
 import 'package:randomfut/pages/timer.page.dart';
 import 'package:randomfut/provider/players.dart';
@@ -16,10 +17,10 @@ class ListaCadasCas extends StatefulWidget {
 }
 
 class _ListaCadasCasState extends State<ListaCadasCas> {
+
   @override
   Widget build(BuildContext context) {
     final Players players = Provider.of(context);
-
     return Scaffold(
       backgroundColor: Color(0xFF41BC3F),
       appBar: AppBar(
@@ -37,7 +38,7 @@ class _ListaCadasCasState extends State<ListaCadasCas> {
           ),
         ],
         centerTitle: true,
-        title: Text("$tittleCont"),
+        title: Text("$titleCont"),
         leading: Image.asset('./assets/images/iconeJogador.png'),
         backgroundColor: Color(0xFF008000),
         elevation: 0,
@@ -78,15 +79,17 @@ class _ListaCadasCasState extends State<ListaCadasCas> {
             SpeedDialChild(
               child: Icon(Icons.sync),
               onTap: () {
-                sorteio();
-                Navigator.push(
-                  context,
-                  MaterialPageRoute(
-                    builder: (context) => SorteadosCas(),
-                  ),
-                );
+                if (jgdr == int.parse(nJogadores)) {
+                  sorteio();
+                  Navigator.push(
+                    context,
+                    MaterialPageRoute(
+                      builder: (context) => SorteadosCas(),
+                    ),
+                  );
+                }
               },
-              backgroundColor: Color(0xFF008000),
+              backgroundColor: Color(botaoSorteio),
               label: 'Sortear',
             ),
           ],

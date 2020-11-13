@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:randomfut/pages/listaCadasCas.page.dart';
 
 var nJogadores = "10";
 var _decisao = ['Sim', 'Não'];
@@ -35,7 +36,19 @@ class _ConfigTimeState extends State<ConfigTime> {
               icon: Icon(Icons.save),
               onPressed: () {
                 _formTime.currentState.save();
+                 Navigator.pop(
+                  context,
+                  MaterialPageRoute(
+                    builder: (context) => ListaCadasCas(),
+                  ),
+                );
                 Navigator.of(context).pop();
+                Navigator.push(
+                  context,
+                  MaterialPageRoute(
+                    builder: (context) => ListaCadasCas(),
+                  ),
+                );
               })
         ],
       ),

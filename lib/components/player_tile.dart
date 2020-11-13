@@ -10,9 +10,10 @@ var notSelected = true;
 var isShowing = false;
 var selection = 0xFF41BC3F;
 var tCas = Titulo();
-var tittleCont = "";
+var titleCont = "";
 var jgdr;
 var vetJogador = [];
+int botaoSorteio = 0xFF008000;
 
 class PlayerTile extends StatefulWidget {
   final Player player;
@@ -86,7 +87,6 @@ class _PlayerTileState extends State<PlayerTile> {
             ),
             isThreeLine: true,
             onLongPress: () {
-              print(_formData['checked']);
               toggleSelection();
               Provider.of<Players>(context, listen: false).put(
                 Player(
@@ -171,7 +171,7 @@ class _PlayerTileState extends State<PlayerTile> {
           _formData['cor'] = 0xFF6ECE6C;
           tCas.contCres();
           jgdr = tCas._jogadorS;
-          tittleCont = "Selecionados: $jgdr/$nJogadores";
+          titleCont = "Selecionados: $jgdr/$nJogadores";
           vetJogador.add(widget.player.name);
           print(vetJogador);
         } else {
@@ -179,7 +179,7 @@ class _PlayerTileState extends State<PlayerTile> {
           _formData['cor'] = 0xFF41BC3F;
           tCas.contDecres();
           jgdr = tCas._jogadorS;
-          tittleCont = "Selecionados: $jgdr/$nJogadores";
+          titleCont = "Selecionados: $jgdr/$nJogadores";
           for (var i = 0; i < vetJogador.length; i++) {
             if (vetJogador[i] == widget.player.name) {
               vetJogador.removeAt(i);
@@ -189,7 +189,7 @@ class _PlayerTileState extends State<PlayerTile> {
           print(vetJogador);
         }
         if (tCas._jogadorS == 0) {
-          tittleCont = "";
+          titleCont = "";
         }
       }
       if ((widget.player.checked == true) &&
@@ -198,7 +198,7 @@ class _PlayerTileState extends State<PlayerTile> {
         _formData['cor'] = 0xFF41BC3F;
         tCas.contDecres();
         jgdr = tCas._jogadorS;
-        tittleCont = "Selecionados: $jgdr/$nJogadores";
+        titleCont = "Selecionados: $jgdr/$nJogadores";
       }
       if (tCas._jogadorS <= 0) {
         notSelected = true;
@@ -206,6 +206,11 @@ class _PlayerTileState extends State<PlayerTile> {
       } else {
         notSelected = false;
         isShowing = true;
+      }
+      if (jgdr == int.parse(nJogadores)) {
+        botaoSorteio = 0xFF008000;
+      } else {
+        botaoSorteio = 0xFF919191;
       }
     });
   }
