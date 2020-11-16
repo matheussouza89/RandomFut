@@ -24,45 +24,53 @@ class _CountDownTimerState extends State<CountDownTimer> {
   int timeInSec = timeInMinut * 60;
   Timer timer;
   void _startTimer() {
-    isRunning = true;
-    start = false;
-    min = timeInMinut;
-    int time = timeInSec;
-    double secPercent = ((100 / timeInSec) / 100);
-    print(secPercent);
-    timer = Timer.periodic(Duration(seconds: 1), (timer) {
-      setState(() {
-        if (time > 0) {
-          time--;
-          timeInSec--;
-          if (timeInSec % 60 == 0) {
+    if (isRunning == false) {
+      isRunning = true;
+      start = false;
+      min = timeInMinut;
+      int time = timeInSec;
+      double secPercent = ((100 / timeInSec) / 100);
+      print(secPercent);
+      timer = Timer.periodic(Duration(seconds: 1), (timer) {
+        setState(() {
+          if (time > 0) {
+            time--;
+            timeInSec--;
+            if (timeInSec % 60 == 0) {
+              sec = 00;
+            } else {
+              if (sec == 00) {
+                min--;
+                sec = 60;
+              }
+              sec--;
+            }
+            if (percent < 1) {
+              if ((percent + secPercent) < 1) {
+                percent += secPercent;
+              }
+            } else {
+              percent = 1;
+            }
+            formatter.format(min);
+            formatter.format(sec);
+            print(formatter.format(min));
+          } else {
+            percent = 0;
+            timeInSec = 60;
+            min = 00;
             sec = 00;
-          } else {
-            if (sec == 00) {
-              min--;
-              sec = 60;
-            }
-            sec--;
+            timer.cancel();
           }
-          if (percent < 1) {
-            if ((percent + secPercent) < 1) {
-              percent += secPercent;
-            }
-          } else {
-            percent = 1;
-          }
-          formatter.format(min);
-          formatter.format(sec);
-          print(formatter.format(min));
-        } else {
-          percent = 0;
-          timeInSec = 60;
-          min = 00;
-          sec = 00;
-          timer.cancel();
-        }
+        });
       });
-    });
+    } else {
+      percent = 0;
+      timeInSec = 60;
+      min = 00;
+      sec = 00;
+      timer.cancel();
+    }
   }
 
   @override
@@ -277,6 +285,7 @@ class _CountDownTimerState extends State<CountDownTimer> {
                                   ),
                                 ),
                                 onPressed: () {
+                                  _startTimer();
                                   Navigator.of(context).pop();
                                 },
                               ),

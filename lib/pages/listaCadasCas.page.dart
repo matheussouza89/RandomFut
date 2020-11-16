@@ -3,6 +3,7 @@ import 'package:flutter_speed_dial/flutter_speed_dial.dart';
 import 'package:randomfut/algorithms/sorteio.dart';
 import 'package:randomfut/components/player_tile.dart';
 import 'package:randomfut/models/player.dart';
+import 'package:randomfut/pages/campoSuperior.dart';
 import 'package:randomfut/pages/sorteadosCas.dart';
 import 'package:randomfut/pages/timer.page.dart';
 import 'package:randomfut/provider/players.dart';
@@ -84,7 +85,7 @@ class _ListaCadasCasState extends State<ListaCadasCas> {
                   Navigator.push(
                     context,
                     MaterialPageRoute(
-                      builder: (context) => SorteadosCas(),
+                      builder: (context) => CampoSuperior(),
                     ),
                   );
                 }

@@ -1,9 +1,12 @@
+import 'dart:async';
 import 'dart:math';
 import 'package:flutter/material.dart';
+import 'package:randomfut/pages/campoInferior.dart';
 
 class CampoSuperior extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
+    changePage(context);
     return Container(
       decoration: BoxDecoration(color: Colors.green),
       child: CustomPaint(
@@ -53,4 +56,17 @@ class CampoSup extends CustomPainter {
 
   @override
   bool shouldRepaint(CustomPainter oldDelegate) => true;
+}
+
+changePage(context) {
+  int i = 0;
+  Timer.periodic(Duration(seconds: 1), (timer) {
+    i++;
+    if (i == 10) {
+      timer.cancel();
+      Navigator.push(
+          context, MaterialPageRoute(builder: (context) => CampoInferior()));
+    }
+    print(i);
+  });
 }
