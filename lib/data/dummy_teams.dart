@@ -5,18 +5,21 @@ const DUMMY_TEAMS = {
     id: '1',
     name: "Time A",
     avatar: null,
-    rate: 5.0,
+    checked: false,
+    cor: 0xFF41BC3F,
   ),
   '2': const Team(
     id: '2',
     name: "Time B",
     avatar: null,
-    rate: 1.0,
+    checked: false,
+    cor: 0xFF41BC3F,
   ),
   '3': const Team(
     id: '3',
     name: "Time C",
     avatar: null,
-    rate: 2.0,
+    checked: false,
+    cor: 0xFF41BC3F,
   )
 };

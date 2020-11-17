@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_speed_dial/flutter_speed_dial.dart';
 import 'package:randomfut/components/team_tile.dart';
 import 'package:randomfut/provider/teams.dart';
 import 'package:provider/provider.dart';
@@ -21,13 +22,12 @@ class _ListaCadasCampState extends State<ListaCadasCamp> {
             padding: EdgeInsets.only(right: 40),
             child: IconButton(
               icon: Icon(Icons.add),
-              onPressed: () { 
-              },
+              onPressed: () {},
             ),
           ),
         ],
         centerTitle: true,
-        title: Text("Selecionados: vr/8"),
+        title: Text(titleCont),
         leading: Image.asset('./assets/images/iconeJogadores.png'),
         backgroundColor: Color(0xFF008000),
         elevation: 0,
@@ -35,6 +35,26 @@ class _ListaCadasCampState extends State<ListaCadasCamp> {
       body: ListView.builder(
         itemCount: teams.count,
         itemBuilder: (ctx, i) => TeamTile(teams.all.elementAt(i)),
+      ),
+      floatingActionButton: SpeedDial(
+        animatedIcon: AnimatedIcons.menu_close,
+        children: [
+          SpeedDialChild(
+              child: Icon(Icons.people),
+              onTap: () {},
+              backgroundColor: Color(0xFF008000),
+              label: 'Config. Time'),
+          SpeedDialChild(
+              child: Icon(Icons.access_time),
+              onTap: () {},
+              backgroundColor: Color(0xFF008000),
+              label: 'Config. Tempo'),
+          SpeedDialChild(
+              child: Icon(Icons.sync),
+              onTap: () {},
+              backgroundColor: Color(0xFF008000),
+              label: 'Sortear as chaves')
+        ],
       ),
     );
   }

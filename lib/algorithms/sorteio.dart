@@ -1,13 +1,15 @@
 import 'dart:math';
+import 'package:flutter/cupertino.dart';
 import 'package:randomfut/components/player_tile.dart';
 
 var a = vetJogador;
 Random r = Random();
-var timeA = [];
-var timeB = [];
-var timeC = [];
-var timeD = [];
-var timeE = [];
+var time1 = [];
+var time2 = [];
+var time3 = [];
+var time4 = [];
+var time5 = [];
+int numeroTimes = 2;
 
 sorteio() {
   var sorteados = [];
@@ -22,38 +24,38 @@ sorteio() {
       sorteados.length == 8 ||
       sorteados.length == 6) {
     // Esta condição é para o caso de 2 Times
-    timeA = [];
-    timeB = [];
+    time1 = [];
+    time2 = [];
     for (int i = 0; i < sorteados.length / 2; i++) {
-      timeA.add('');
-      timeB.add('');
+      time1.add('');
+      time2.add('');
     }
     for (int i = 0; i < sorteados.length / 2; i++) {
-      timeA[i] = sorteados[i];
-      timeB[i] = sorteados[((sorteados.length - 1) - i)];
+      time1[i] = sorteados[i];
+      time2[i] = sorteados[((sorteados.length - 1) - i)];
     }
   }
   if (sorteados.length == 15 ||
       sorteados.length == 12 ||
       sorteados.length == 9) {
     // Esta condição é para o caso de 3 Times
-    timeA = [];
-    timeB = [];
-    timeC = [];
+    time1 = [];
+    time2 = [];
+    time3 = [];
     for (int i = 0; i < sorteados.length / 3; i++) {
-      timeA.add('');
-      timeB.add('');
-      timeC.add('');
+      time1.add('');
+      time2.add('');
+      time3.add('');
     }
     for (int i = 0; i < sorteados.length / 3; i++) {
-      timeA[i] = sorteados[i];
-      timeB[i] =
+      time1[i] = sorteados[i];
+      time2[i] =
           sorteados[((sorteados.length - 1) - (sorteados.length ~/ 3)) - i];
-      timeC[i] = sorteados[((sorteados.length - 1) - i)];
+      time3[i] = sorteados[((sorteados.length - 1) - i)];
     }
   }
   print(sorteados);
-  print(timeA);
-  print(timeB);
-  print(timeC);
+  print(time1);
+  print(time2);
+  print(time3);
 }

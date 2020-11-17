@@ -42,7 +42,7 @@ class _PlayerTileState extends State<PlayerTile> {
   @override
   Widget build(BuildContext context) {
     final avatar = widget.player.avatar == null || widget.player.avatar.isEmpty
-        ? CircleAvatar(child: Image.asset('./assets/images/emptyPlayer.png'))
+        ? CircleAvatar(child: Icon(Icons.person),backgroundColor: Colors.grey[300], foregroundColor: Colors.grey[600],)
         : CircleAvatar(
             child: Image.asset(widget.player.avatar),
           ); //Mudar Aqui para colocar a imagem do Usuario
@@ -53,8 +53,8 @@ class _PlayerTileState extends State<PlayerTile> {
           ListTile(
             leading: Container(
               child: Container(
-                height: 50,
-                width: 50,
+                height: 75,
+                width: 75,
                 child: avatar,
               ),
             ),
@@ -87,7 +87,8 @@ class _PlayerTileState extends State<PlayerTile> {
             ),
             isThreeLine: true,
             onLongPress: () {
-              toggleSelection();
+              if(tCas._jogadorS == 0){
+                toggleSelection();
               Provider.of<Players>(context, listen: false).put(
                 Player(
                   id: _formData['id'],
@@ -99,6 +100,23 @@ class _PlayerTileState extends State<PlayerTile> {
                   cor: _formData['cor'],
                 ),
               );
+              }
+            },
+            onTap: (){
+              if(tCas._jogadorS >= 1){
+                toggleSelection();
+              Provider.of<Players>(context, listen: false).put(
+                Player(
+                  id: _formData['id'],
+                  name: _formData['name'],
+                  position: _formData['position'],
+                  avatar: _formData['avatar'],
+                  rate: _formData['rate'],
+                  checked: _formData['checked'],
+                  cor: _formData['cor'],
+                ),
+              );
+              }
             },
             trailing: Visibility(
               visible: notSelected,

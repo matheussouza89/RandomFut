@@ -32,18 +32,22 @@ class Teams with ChangeNotifier {
           id: team.id,
           name: team.name,
           avatar: team.avatar,
-          rate: team.rate,
+          checked: team.checked,
+          cor: team.cor,
         ),
       );
     } else {
       final id = Random().nextDouble().toString();
+      final checked = false;
+      final cor = 0xFF41BC3F;
       _items.putIfAbsent(
         id,
         () => Team(
           id: id,
           name: team.name,
           avatar: team.avatar,
-          rate: team.rate,
+          checked: checked,
+          cor: cor,
         ),
       );
     }

@@ -64,6 +64,7 @@ changePage(context) {
     i++;
     if (i == 10) {
       timer.cancel();
+      Navigator.of(context).pop();
       Navigator.push(
           context, MaterialPageRoute(builder: (context) => CampoInferior()));
     }

@@ -4,12 +4,14 @@ class Team {
   final String id;
   final String name;
   final String avatar;
-  final double rate;
+  final bool checked;
+  final int cor;
 
   const Team({
     this.id,
-    @required this.name,
-    @required this.avatar,
-    this.rate,
+    this.name,
+    this.avatar,
+    this.checked,
+    this.cor,
   });
 }

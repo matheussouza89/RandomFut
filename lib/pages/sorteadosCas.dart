@@ -20,12 +20,12 @@ class _SorteadosCasState extends State<SorteadosCas> {
           children: [
             Container(
               child: ListView.builder(
-                itemCount: timeA.length,
+                itemCount: time1.length,
                 itemBuilder: (ctx, i) {
                   return Padding(
                     padding: const EdgeInsets.all(12.0),
                     child: Text(
-                      timeA[i],
+                      time1[i],
                       style: TextStyle(fontSize: 25,),
                       textAlign: TextAlign.center,
                     ),
@@ -36,12 +36,12 @@ class _SorteadosCasState extends State<SorteadosCas> {
             ),
             Container(
               child: ListView.builder(
-                itemCount: timeB.length,
+                itemCount: time2.length,
                 itemBuilder: (ctx, i) {
                   return Padding(
                     padding: const EdgeInsets.all(12.0),
                     child: Text(
-                      timeB[i],
+                      time2[i],
                       style: TextStyle(fontSize: 25),
                       textAlign: TextAlign.center,
                     ),
