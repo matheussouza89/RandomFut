@@ -36,25 +36,28 @@ class _ListaCadasCampState extends State<ListaCadasCamp> {
         itemCount: teams.count,
         itemBuilder: (ctx, i) => TeamTile(teams.all.elementAt(i)),
       ),
-      floatingActionButton: SpeedDial(
-        animatedIcon: AnimatedIcons.menu_close,
-        children: [
-          SpeedDialChild(
-              child: Icon(Icons.people),
-              onTap: () {},
-              backgroundColor: Color(0xFF008000),
-              label: 'Config. Time'),
-          SpeedDialChild(
-              child: Icon(Icons.access_time),
-              onTap: () {},
-              backgroundColor: Color(0xFF008000),
-              label: 'Config. Tempo'),
-          SpeedDialChild(
-              child: Icon(Icons.sync),
-              onTap: () {},
-              backgroundColor: Color(0xFF008000),
-              label: 'Sortear as chaves')
-        ],
+      floatingActionButton: Visibility(
+        visible: isShowing,
+        child: SpeedDial(
+          animatedIcon: AnimatedIcons.menu_close,
+          children: [
+            SpeedDialChild(
+                child: Icon(Icons.people),
+                onTap: () {},
+                backgroundColor: Color(0xFF008000),
+                label: 'Config. Time'),
+            SpeedDialChild(
+                child: Icon(Icons.access_time),
+                onTap: () {},
+                backgroundColor: Color(0xFF008000),
+                label: 'Config. Tempo'),
+            SpeedDialChild(
+                child: Icon(Icons.sync),
+                onTap: () {},
+                backgroundColor: Color(0xFF008000),
+                label: 'Sortear as chaves')
+          ],
+        ),
       ),
     );
   }

@@ -42,7 +42,7 @@ class _PlayerTileState extends State<PlayerTile> {
   @override
   Widget build(BuildContext context) {
     final avatar = widget.player.avatar == null || widget.player.avatar.isEmpty
-        ? CircleAvatar(child: Icon(Icons.person),backgroundColor: Colors.grey[300], foregroundColor: Colors.grey[600],)
+        ? CircleAvatar(child: Icon(Icons.person,size: 45,),backgroundColor: Colors.grey[300], foregroundColor: Colors.grey[600],)
         : CircleAvatar(
             child: Image.asset(widget.player.avatar),
           ); //Mudar Aqui para colocar a imagem do Usuario

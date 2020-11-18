@@ -8,6 +8,8 @@ var tCamp = Titulo();
 var time;
 var vetTime = [];
 var titleCont = "";
+var notSelected = true;
+var isShowing = false;
 
 class TeamTile extends StatefulWidget {
   final Team team;
@@ -34,7 +36,11 @@ class _TeamTileState extends State<TeamTile> {
   @override
   Widget build(BuildContext context) {
     final avatar = widget.team.avatar == null || widget.team.avatar.isEmpty
-        ? CircleAvatar(child: Icon(Icons.people),backgroundColor: Colors.grey[300], foregroundColor: Colors.grey[600],)
+        ? CircleAvatar(
+            child: Icon(Icons.people,size: 40,),
+            backgroundColor: Colors.grey[300],
+            foregroundColor: Colors.grey[600],
+          )
         : CircleAvatar(
             child: Image.asset(widget.team.avatar),
           ); //Mudar Aqui para colocar a imagem do Usuario
@@ -53,72 +59,75 @@ class _TeamTileState extends State<TeamTile> {
             title: Text(widget.team.name),
             subtitle: Text("3/5"),
             onLongPress: () {
-              if(tCamp._timeS == 0){
-              toggleSelection();
-              Provider.of<Teams>(context, listen: false).put(
-                Team(
-                  id: _formData['id'],
-                  name: _formData['name'],
-                  avatar: _formData['avatar'],
-                  checked: _formData['checked'],
-                  cor: _formData['cor'],
-                ),
-              );
+              if (tCamp._timeS == 0) {
+                toggleSelection();
+                Provider.of<Teams>(context, listen: false).put(
+                  Team(
+                    id: _formData['id'],
+                    name: _formData['name'],
+                    avatar: _formData['avatar'],
+                    checked: _formData['checked'],
+                    cor: _formData['cor'],
+                  ),
+                );
               }
             },
             onTap: () {
-              if(tCamp._timeS >= 1){
-              toggleSelection();
-              Provider.of<Teams>(context, listen: false).put(
-                Team(
-                  id: _formData['id'],
-                  name: _formData['name'],
-                  avatar: _formData['avatar'],
-                  checked: _formData['checked'],
-                  cor: _formData['cor'],
-                ),
-              );
+              if (tCamp._timeS >= 1) {
+                toggleSelection();
+                Provider.of<Teams>(context, listen: false).put(
+                  Team(
+                    id: _formData['id'],
+                    name: _formData['name'],
+                    avatar: _formData['avatar'],
+                    checked: _formData['checked'],
+                    cor: _formData['cor'],
+                  ),
+                );
               }
             },
-            trailing: Container(
-              width: 100,
-              child: Row(
-                children: [
-                  IconButton(
-                    icon: Icon(Icons.edit),
-                    onPressed: () {},
-                  ),
-                  IconButton(
-                    icon: Icon(Icons.delete),
-                    onPressed: () {
-                      showDialog(
-                        context: context,
-                        builder: (ctx) => AlertDialog(
-                          title: Text('Excluir Time'),
-                          content:
-                              Text('Tem certeza que quer excluir este time?'),
-                          actions: [
-                            FlatButton(
-                              onPressed: () {
-                                Navigator.of(context).pop();
-                              },
-                              child: Text('Não'),
-                            ),
-                            FlatButton(
-                              onPressed: () {
-                                Navigator.of(context).pop();
-                                Provider.of<Teams>(context, listen: false)
-                                    .remove(widget.team);
-                              },
-                              child: Text('Sim'),
-                            ),
-                          ],
-                        ),
-                      );
-                    },
-                    color: Colors.red,
-                  )
-                ],
+            trailing: Visibility(
+              visible: notSelected,
+              child: Container(
+                width: 100,
+                child: Row(
+                  children: [
+                    IconButton(
+                      icon: Icon(Icons.edit),
+                      onPressed: () {},
+                    ),
+                    IconButton(
+                      icon: Icon(Icons.delete),
+                      onPressed: () {
+                        showDialog(
+                          context: context,
+                          builder: (ctx) => AlertDialog(
+                            title: Text('Excluir Time'),
+                            content:
+                                Text('Tem certeza que quer excluir este time?'),
+                            actions: [
+                              FlatButton(
+                                onPressed: () {
+                                  Navigator.of(context).pop();
+                                },
+                                child: Text('Não'),
+                              ),
+                              FlatButton(
+                                onPressed: () {
+                                  Navigator.of(context).pop();
+                                  Provider.of<Teams>(context, listen: false)
+                                      .remove(widget.team);
+                                },
+                                child: Text('Sim'),
+                              ),
+                            ],
+                          ),
+                        );
+                      },
+                      color: Colors.red,
+                    )
+                  ],
+                ),
               ),
             ),
           ),
@@ -160,6 +169,13 @@ class _TeamTileState extends State<TeamTile> {
       }
       if (tCamp._timeS == 0) {
         titleCont = "";
+      }
+      if (tCamp._timeS <= 0) {
+        notSelected = true;
+        isShowing = false;
+      } else {
+        notSelected = false;
+        isShowing = true;
       }
     });
   }
