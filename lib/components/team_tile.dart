@@ -84,6 +84,13 @@ class _TeamTileState extends State<TeamTile> {
                     cor: _formData['cor'],
                   ),
                 );
+              }else{
+               Navigator.pushReplacement(
+                context,
+                MaterialPageRoute(
+                  builder: (context) => ListaPlayerTeam(),
+                ),
+              );
               }
             },
             trailing: Visibility(

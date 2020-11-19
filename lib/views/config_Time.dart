@@ -1,10 +1,20 @@
 import 'package:flutter/material.dart';
 import 'package:randomfut/pages/listaCadasCas.page.dart';
 
-var nJogadores = "10";
+var nTimes = _itemSelecionado1 == 'Selecione a opção (opção padrão: 2)'
+    ? "2"
+    : _itemSelecionado1;
+var nJogadores = _itemSelecionado1 == 'Selecione a opção (opção padrão: 2)'
+    ? "10"
+    : _itemSelecionado2;
 var _decisao = ['Sim', 'Não'];
-var _itemSelecionado1 = 'Selecione a opção (opção padrão: Não)';
-var _itemSelecionado2 = 'Selecione a opção (opção padrão: Não)';
+var _decisaoTime = ['2', '3', '4'];
+var _decisaoJog = [''];
+var _itemSelecionado1 = 'Selecione a opção (opção padrão: 2)';
+var _itemSelecionado2 = 'Selecione o numero total de Jogadores';
+var _itemSelecionado3 = 'Selecione a opção (opção padrão: Não)';
+var _itemSelecionado4 = 'Selecione a opção (opção padrão: Não)';
+var visibilidade = false;
 
 class ConfigTime extends StatefulWidget {
   @override
@@ -14,15 +24,53 @@ class ConfigTime extends StatefulWidget {
 class _ConfigTimeState extends State<ConfigTime> {
   final _formTime = GlobalKey<FormState>();
 
-  void _selecaoBalanceamento(String novoItem) {
+  numeroJogadoresF() {
+    setState(() {
+      if (_itemSelecionado1 == '2') {
+        _decisaoJog = ['6', '8', '10', '12'];
+      } else if (_itemSelecionado1 == '3') {
+        _decisaoJog = ['9', '12', '15', '18'];
+      } else if (_itemSelecionado1 == '4') {
+        _decisaoJog = ['12', '16', '20', '24'];
+      }
+    });
+  }
+
+  void _selecaoNTime(String novoItem) {
     setState(() {
       _itemSelecionado1 = novoItem;
+      _itemSelecionado2 = 'Selecione o numero total de Jogadores';
+      if (_itemSelecionado1 == '2' &&
+          _itemSelecionado2 == 'Selecione o numero total de Jogadores') {
+        nJogadores = '10';
+      } else if (_itemSelecionado1 == '3' &&
+          _itemSelecionado2 == 'Selecione o numero total de Jogadores') {
+        nJogadores = '15';
+      } else if (_itemSelecionado1 == '4' &&
+          _itemSelecionado2 == 'Selecione o numero total de Jogadores') {
+        nJogadores = '20';
+      }
+      visibilidade = true;
+      numeroJogadoresF();
+    });
+  }
+
+  void _selecaoNJog(String novoItem) {
+    setState(() {
+      _itemSelecionado2 = novoItem;
+      nJogadores = _itemSelecionado2;
+    });
+  }
+
+  void _selecaoBalanceamento(String novoItem) {
+    setState(() {
+      _itemSelecionado3 = novoItem;
     });
   }
 
   void _selecaoBasePosicao(String novoItem) {
     setState(() {
-      _itemSelecionado2 = novoItem;
+      _itemSelecionado4 = novoItem;
     });
   }
 
@@ -36,7 +84,7 @@ class _ConfigTimeState extends State<ConfigTime> {
               icon: Icon(Icons.save),
               onPressed: () {
                 _formTime.currentState.save();
-                 Navigator.pop(
+                Navigator.pop(
                   context,
                   MaterialPageRoute(
                     builder: (context) => ListaCadasCas(),
@@ -58,10 +106,38 @@ class _ConfigTimeState extends State<ConfigTime> {
           key: _formTime,
           child: Column(
             children: [
-              TextFormField(
-                initialValue: nJogadores,
-                decoration: InputDecoration(labelText: 'Numero de Jogadores'),
-                onSaved: (value) => nJogadores = value,
+              Text("Numero de Times"),
+              DropdownButton(
+                items: _decisaoTime.map((String dropDownStringItem) {
+                  return DropdownMenuItem<String>(
+                    value: dropDownStringItem,
+                    child: Text(dropDownStringItem),
+                  );
+                }).toList(),
+                onChanged: (String novoItemSelecionado) {
+                  _selecaoNTime(novoItemSelecionado);
+                },
+                hint: Text(_itemSelecionado1),
+              ),
+              Visibility(
+                visible: visibilidade,
+                child: Column(
+                  children: [
+                    Text("Numero de Jogadores"),
+                    DropdownButton(
+                      items: _decisaoJog.map((String dropDownStringItem) {
+                        return DropdownMenuItem<String>(
+                          value: dropDownStringItem,
+                          child: Text(dropDownStringItem),
+                        );
+                      }).toList(),
+                      onChanged: (String novoItemSelecionado) {
+                        _selecaoNJog(novoItemSelecionado);
+                      },
+                      hint: Text(_itemSelecionado2),
+                    ),
+                  ],
+                ),
               ),
               Text("Times Balanceados"),
               DropdownButton(
@@ -74,7 +150,7 @@ class _ConfigTimeState extends State<ConfigTime> {
                 onChanged: (String novoItemSelecionado) {
                   _selecaoBalanceamento(novoItemSelecionado);
                 },
-                hint: Text(_itemSelecionado1),
+                hint: Text(_itemSelecionado3),
               ),
               Text("Sorteio com Base na Posição"),
               DropdownButton(
@@ -87,7 +163,7 @@ class _ConfigTimeState extends State<ConfigTime> {
                 onChanged: (String novoItemSelecionado) {
                   _selecaoBasePosicao(novoItemSelecionado);
                 },
-                hint: Text(_itemSelecionado2),
+                hint: Text(_itemSelecionado4),
               )
             ],
           ),
