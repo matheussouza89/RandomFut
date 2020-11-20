@@ -100,72 +100,95 @@ class _ConfigTimeState extends State<ConfigTime> {
               })
         ],
       ),
-      body: Padding(
-        padding: EdgeInsets.all(10),
-        child: Form(
-          key: _formTime,
-          child: Column(
-            children: [
-              Text("Numero de Times"),
-              DropdownButton(
-                items: _decisaoTime.map((String dropDownStringItem) {
-                  return DropdownMenuItem<String>(
-                    value: dropDownStringItem,
-                    child: Text(dropDownStringItem),
-                  );
-                }).toList(),
-                onChanged: (String novoItemSelecionado) {
-                  _selecaoNTime(novoItemSelecionado);
-                },
-                hint: Text(_itemSelecionado1),
-              ),
-              Visibility(
-                visible: visibilidade,
-                child: Column(
-                  children: [
-                    Text("Numero de Jogadores"),
-                    DropdownButton(
-                      items: _decisaoJog.map((String dropDownStringItem) {
-                        return DropdownMenuItem<String>(
-                          value: dropDownStringItem,
-                          child: Text(dropDownStringItem),
-                        );
-                      }).toList(),
-                      onChanged: (String novoItemSelecionado) {
-                        _selecaoNJog(novoItemSelecionado);
-                      },
-                      hint: Text(_itemSelecionado2),
-                    ),
-                  ],
+      body: Center(
+              child: Padding(
+          padding: EdgeInsets.all(20),
+          child: Form(
+            key: _formTime,
+            child: Column(
+              children: [
+                Text(
+                  "Numero de Times",
+                  style: TextStyle(fontSize: 20),
                 ),
-              ),
-              Text("Times Balanceados"),
-              DropdownButton(
-                items: _decisao.map((String dropDownStringItem) {
-                  return DropdownMenuItem<String>(
-                    value: dropDownStringItem,
-                    child: Text(dropDownStringItem),
-                  );
-                }).toList(),
-                onChanged: (String novoItemSelecionado) {
-                  _selecaoBalanceamento(novoItemSelecionado);
-                },
-                hint: Text(_itemSelecionado3),
-              ),
-              Text("Sorteio com Base na Posição"),
-              DropdownButton(
-                items: _decisao.map((String dropDownStringItem) {
-                  return DropdownMenuItem<String>(
-                    value: dropDownStringItem,
-                    child: Text(dropDownStringItem),
-                  );
-                }).toList(),
-                onChanged: (String novoItemSelecionado) {
-                  _selecaoBasePosicao(novoItemSelecionado);
-                },
-                hint: Text(_itemSelecionado4),
-              )
-            ],
+                DropdownButton(
+                  items: _decisaoTime.map((String dropDownStringItem) {
+                    return DropdownMenuItem<String>(
+                      value: dropDownStringItem,
+                      child: Text(dropDownStringItem),
+                    );
+                  }).toList(),
+                  onChanged: (String novoItemSelecionado) {
+                    _selecaoNTime(novoItemSelecionado);
+                  },
+                  hint: Text(_itemSelecionado1),
+                ),
+                Visibility(
+                  visible: visibilidade,
+                  child: Column(
+                    children: [
+                      SizedBox(
+                        height: 60,
+                      ),
+                      Text(
+                        "Numero de Jogadores",
+                        style: TextStyle(fontSize: 20),
+                      ),
+                      DropdownButton(
+                        items: _decisaoJog.map((String dropDownStringItem) {
+                          return DropdownMenuItem<String>(
+                            value: dropDownStringItem,
+                            child: Text(dropDownStringItem),
+                          );
+                        }).toList(),
+                        onChanged: (String novoItemSelecionado) {
+                          _selecaoNJog(novoItemSelecionado);
+                        },
+                        hint: Text(_itemSelecionado2),
+                      ),
+                    ],
+                  ),
+                ),
+                SizedBox(
+                  height: 60,
+                ),
+                Text(
+                  "Times Balanceados",
+                  style: TextStyle(fontSize: 20),
+                ),
+                DropdownButton(
+                  items: _decisao.map((String dropDownStringItem) {
+                    return DropdownMenuItem<String>(
+                      value: dropDownStringItem,
+                      child: Text(dropDownStringItem),
+                    );
+                  }).toList(),
+                  onChanged: (String novoItemSelecionado) {
+                    _selecaoBalanceamento(novoItemSelecionado);
+                  },
+                  hint: Text(_itemSelecionado3),
+                ),
+                SizedBox(
+                  height: 60,
+                ),
+                Text(
+                  "Sorteio com Base na Posição",
+                  style: TextStyle(fontSize: 20),
+                ),
+                DropdownButton(
+                  items: _decisao.map((String dropDownStringItem) {
+                    return DropdownMenuItem<String>(
+                      value: dropDownStringItem,
+                      child: Text(dropDownStringItem),
+                    );
+                  }).toList(),
+                  onChanged: (String novoItemSelecionado) {
+                    _selecaoBasePosicao(novoItemSelecionado);
+                  },
+                  hint: Text(_itemSelecionado4),
+                )
+              ],
+            ),
           ),
         ),
       ),

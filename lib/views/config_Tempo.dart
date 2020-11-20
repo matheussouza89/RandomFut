@@ -1,9 +1,17 @@
 import 'package:flutter/material.dart';
 
-var tempoJogo = "3";
-var nroGols;
+var tempoJogo = _itemSelecionado1 == 'Selecione a opção (opção padrão: 5)'
+    ? '5'
+    : _itemSelecionado1;
+var nroGols = _itemSelecionado2 == 'Selecione a opção (opção padrão: Não)'
+    ? null
+    : _itemSelecionado3;
 var _decisao = ['Sim', 'Não'];
-var _itemSelecionado1 = 'Selecione a opção (opção padrão: Não)';
+var _decisaoTempo = ['3', '4', '5', '6', '7', '8', '9', '10'];
+var _decisaoGols = ['2', '3', '4', '5', '6', '7', '8', '9', '10'];
+var _itemSelecionado1 = 'Selecione a opção (opção padrão: 5)';
+var _itemSelecionado2 = 'Selecione a opção (opção padrão: Não)';
+var _itemSelecionado3 = 'Selecione a opção (opção padrão: )';
 var visibilidade = false;
 
 class ConfigTempo extends StatefulWidget {
@@ -14,14 +22,30 @@ class ConfigTempo extends StatefulWidget {
 class _ConfigTempoState extends State<ConfigTempo> {
   final _formTempo = GlobalKey<FormState>();
 
-  void _selecaoTermino(String novoItem) {
+  void _selecaoTempo(String novoItem) {
     setState(() {
       _itemSelecionado1 = novoItem;
+      if (_itemSelecionado2 == 'Não' ||
+          _itemSelecionado2 == 'Selecione a opção (opção padrão: Não)') {
+        nroGols = null;
+      }
+    });
+  }
+
+  void _selecaoTermino(String novoItem) {
+    setState(() {
+      _itemSelecionado2 = novoItem;
       if (novoItem == 'Sim') {
         visibilidade = true;
       } else {
         visibilidade = false;
       }
+    });
+  }
+
+  void _selecaoNroGols(String novoItem) {
+    setState(() {
+      _itemSelecionado3 = novoItem;
     });
   }
 
@@ -39,41 +63,79 @@ class _ConfigTempoState extends State<ConfigTempo> {
               })
         ],
       ),
-      body: Padding(
-        padding: EdgeInsets.all(10),
-        child: Form(
-          key: _formTempo,
-          child: Column(
-            children: [
-              TextFormField(
-                initialValue: "10",
-                decoration:
-                    InputDecoration(labelText: 'Tempo de Jogo (em minutos):'),
-                onSaved: (value) => tempoJogo = value,
+      body: Center(
+        child: Padding(
+          padding: EdgeInsets.all(10),
+          child: Form(
+            key: _formTempo,
+            child: Padding(
+              padding: const EdgeInsets.all(20.0),
+              child: Column(
+                children: [
+                  Text(
+                    "Tempo de partida:",
+                    style: TextStyle(fontSize: 20),
+                  ),
+                  DropdownButton(
+                    items: _decisaoTempo.map((String dropDownStringItem) {
+                      return DropdownMenuItem<String>(
+                        value: dropDownStringItem,
+                        child: Text(dropDownStringItem),
+                      );
+                    }).toList(),
+                    onChanged: (String novoItemSelecionado) {
+                      _selecaoTempo(novoItemSelecionado);
+                    },
+                    hint: Text(_itemSelecionado1),
+                  ),
+                  SizedBox(
+                    height: 60,
+                  ),
+                  Text(
+                    "Término de partida por número de gols:",
+                    style: TextStyle(fontSize: 20),
+                  ),
+                  DropdownButton(
+                    items: _decisao.map((String dropDownStringItem) {
+                      return DropdownMenuItem<String>(
+                        value: dropDownStringItem,
+                        child: Text(dropDownStringItem),
+                      );
+                    }).toList(),
+                    onChanged: (String novoItemSelecionado) {
+                      _selecaoTermino(novoItemSelecionado);
+                    },
+                    hint: Text(_itemSelecionado2),
+                  ),
+                  Visibility(
+                    child: Column(
+                      children: [
+                        SizedBox(
+                          height: 60,
+                        ),
+                        Text(
+                          "Quantidade de gols para término:",
+                          style: TextStyle(fontSize: 20),
+                        ),
+                        DropdownButton(
+                          items: _decisaoGols.map((String dropDownStringItem) {
+                            return DropdownMenuItem<String>(
+                              value: dropDownStringItem,
+                              child: Text(dropDownStringItem),
+                            );
+                          }).toList(),
+                          onChanged: (String novoItemSelecionado) {
+                            _selecaoNroGols(novoItemSelecionado);
+                          },
+                          hint: Text(_itemSelecionado3),
+                        ),
+                      ],
+                    ),
+                    visible: visibilidade,
+                  )
+                ],
               ),
-              Text("Término de partida por número de gols"),
-              DropdownButton(
-                items: _decisao.map((String dropDownStringItem) {
-                  return DropdownMenuItem<String>(
-                    value: dropDownStringItem,
-                    child: Text(dropDownStringItem),
-                  );
-                }).toList(),
-                onChanged: (String novoItemSelecionado) {
-                  _selecaoTermino(novoItemSelecionado);
-                },
-                hint: Text(_itemSelecionado1),
-              ),
-              Visibility(
-                child: TextFormField(
-                  initialValue: "2",
-                  decoration: InputDecoration(
-                      labelText: 'Gols para terminar a partida:'),
-                  onSaved: (value) => nroGols = value,
-                ),
-                visible: visibilidade,
-              )
-            ],
+            ),
           ),
         ),
       ),
