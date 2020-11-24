@@ -15,6 +15,8 @@ var _itemSelecionado2 = 'Selecione o numero total de Jogadores';
 var _itemSelecionado3 = 'Selecione a opção (opção padrão: Não)';
 var _itemSelecionado4 = 'Selecione a opção (opção padrão: Não)';
 var visibilidade = false;
+var visibilidadeTime3 = false;
+var visibilidadeTime4 = false;
 
 class ConfigTime extends StatefulWidget {
   @override
@@ -43,12 +45,18 @@ class _ConfigTimeState extends State<ConfigTime> {
       if (_itemSelecionado1 == '2' &&
           _itemSelecionado2 == 'Selecione o numero total de Jogadores') {
         nJogadores = '10';
+        visibilidadeTime3 = false;
+        visibilidadeTime4 = false;
       } else if (_itemSelecionado1 == '3' &&
           _itemSelecionado2 == 'Selecione o numero total de Jogadores') {
         nJogadores = '15';
+        visibilidadeTime3 = true;
+        visibilidadeTime4 = false;
       } else if (_itemSelecionado1 == '4' &&
           _itemSelecionado2 == 'Selecione o numero total de Jogadores') {
         nJogadores = '20';
+        visibilidadeTime3 = true;
+        visibilidadeTime4 = true;
       }
       visibilidade = true;
       numeroJogadoresF();
@@ -101,7 +109,7 @@ class _ConfigTimeState extends State<ConfigTime> {
         ],
       ),
       body: Center(
-              child: Padding(
+        child: Padding(
           padding: EdgeInsets.all(20),
           child: Form(
             key: _formTime,

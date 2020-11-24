@@ -65,8 +65,9 @@ changePage(context) {
   int i = 0;
   Timer.periodic(Duration(seconds: 1), (timer) {
     i++;
-    if (i == 10) {
+    if (i == 1) {
       timer.cancel();
+      Navigator.of(context).pop();
       Navigator.push(
           context, MaterialPageRoute(builder: (context) => SorteadosCas()));
     }
