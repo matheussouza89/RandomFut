@@ -11,6 +11,10 @@ class CountDownTimer extends StatefulWidget {
 }
 
 class _CountDownTimerState extends State<CountDownTimer> {
+  var icone = Icon(Icons.music_note);
+  var nomeTimeE = "Time 1";
+  var nomeTimeD = "Time 2";
+  var somAtivo = true;
   NumberFormat formatter = NumberFormat("00.##");
   int placarA = 0;
   int placarB = 0;
@@ -73,12 +77,81 @@ class _CountDownTimerState extends State<CountDownTimer> {
     }
   }
 
+  void _configSound() {
+    setState(() {
+      if (somAtivo == true) {
+        icone = Icon(Icons.music_off);
+        somAtivo = false;
+      } else {
+        icone = Icon(Icons.music_note);
+        somAtivo = true;
+      }
+    });
+  }
+
   @override
   Widget build(BuildContext context) {
     return SafeArea(
       child: Scaffold(
+        drawer: Drawer(
+          child: ListView(
+            children: [
+              DrawerHeader(
+                child: Image.asset('./assets/images/logo-Recuperado.png'),
+                decoration: BoxDecoration(color: Color(0xFF349632)),
+              ),
+              ListTile(
+                title: Text("Mudar nome do time: ($nomeTimeE)"),
+                subtitle: TextField(
+                  onChanged: (value) {
+                    setState(() {
+                      nomeTimeE = value;
+                    });
+                  },
+                ),
+              ),
+              ListTile(
+                title: Text("Mudar nome do time: ($nomeTimeD)"),
+                subtitle: TextField(
+                  onChanged: (value) {
+                   setState(() {
+                      nomeTimeD = value;
+                    });
+                  },
+                ),
+              ),
+              ListTile(
+                title: Text("Mudar nome do time 3"),
+                subtitle: TextField(
+                  onChanged: (value) {},
+                ),
+              ),
+              ListTile(
+                title: Text("Mudar nome do time 4"),
+                subtitle: TextField(
+                  onChanged: (value) {},
+                ),
+              ),
+              Divider(),
+              ListTile(
+                title: Text("Time Ganhador VS Time C"),
+                subtitle: Text("Proximo Jogo"),
+              )
+            ],
+          ),
+        ),
         appBar: AppBar(
-          leading: FlatButton(onPressed: () {}, child: Icon(Icons.menu)),
+          actions: [
+            Container(
+              padding: EdgeInsets.only(right: 40),
+              child: IconButton(
+                icon: icone,
+                onPressed: () {
+                  _configSound();
+                },
+              ),
+            ),
+          ],
           backgroundColor: Color(0xFF349632),
           elevation: 0,
         ),
@@ -135,7 +208,7 @@ class _CountDownTimerState extends State<CountDownTimer> {
                                   child: Column(
                                     children: <Widget>[
                                       Text(
-                                        "variavel_timeA",
+                                        "$nomeTimeE",
                                         style: TextStyle(
                                           fontSize: 20.0,
                                         ),
@@ -206,7 +279,7 @@ class _CountDownTimerState extends State<CountDownTimer> {
                                   child: Column(
                                     children: <Widget>[
                                       Text(
-                                        "variavel_timeB",
+                                        "$nomeTimeD",
                                         style: TextStyle(
                                           fontSize: 20.0,
                                         ),
