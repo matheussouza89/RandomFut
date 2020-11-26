@@ -1,3 +1,4 @@
+import 'package:auto_size_text/auto_size_text.dart';
 import 'package:flutter/material.dart';
 import 'package:randomfut/pages/listaPlayerTeam.dart';
 import 'package:randomfut/pages/modo.page.dart';
@@ -39,9 +40,10 @@ class LoginPage extends StatelessWidget {
                 elevation: 8,
                 shape: new RoundedRectangleBorder(
                     borderRadius: new BorderRadius.circular(30.0)),
-                child: Text(
+                child: AutoSizeText(
                   "Entrar sem Login",
                   style: TextStyle(color: Colors.white, fontSize: 20),
+                  minFontSize: 15,
                 ),
                 color: Color(0xFF008000),
               ),
@@ -50,10 +52,11 @@ class LoginPage extends StatelessWidget {
               height: 10,
             ),
             Center(
-              child: Text(
+              child: AutoSizeText(
                 "OU \n Para acesso a mais recursos",
                 style: TextStyle(color: Colors.white, fontSize: 20, height: 2),
                 textAlign: TextAlign.center,
+                minFontSize: 15,
               ),
             ),
             SizedBox(
@@ -93,9 +96,14 @@ class LoginPage extends StatelessWidget {
                       Container(
                         width: 20,
                       ),
-                      Text(
-                        "Entrar com Facebook",
-                        style: TextStyle(color: Colors.white, fontSize: 20),
+                      Expanded(
+                                              child: AutoSizeText(
+                          "Entrar com Facebook",
+                          style: TextStyle(color: Colors.white, fontSize: 20),
+                          minFontSize: 15,
+                          maxFontSize: 40,
+                          maxLines: 1,
+                        ),
                       )
                     ],
                   ),
@@ -112,11 +120,11 @@ class LoginPage extends StatelessWidget {
               child: RaisedButton(
                 onPressed: () => {
                   Navigator.pushReplacement(
-                      context,
-                      MaterialPageRoute(
-                        builder: (context) => ListaPlayerTeam(),
-                      ),
-                    )
+                    context,
+                    MaterialPageRoute(
+                      builder: (context) => ListaPlayerTeam(),
+                    ),
+                  )
                 },
                 elevation: 8,
                 shape: new RoundedRectangleBorder(
@@ -137,9 +145,14 @@ class LoginPage extends StatelessWidget {
                     Container(
                       width: 20,
                     ),
-                    Text(
-                      "Entrar com Google",
-                      style: TextStyle(color: Colors.white, fontSize: 20),
+                    Expanded(
+                      child: AutoSizeText(
+                        "Entrar com Google",
+                        style: TextStyle(color: Colors.white, fontSize: 20),
+                        minFontSize: 15,
+                        maxFontSize: 40,
+                        maxLines: 1,
+                      ),
                     )
                   ],
                 ),

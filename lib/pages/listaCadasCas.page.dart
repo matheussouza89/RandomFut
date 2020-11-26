@@ -1,3 +1,4 @@
+import 'package:auto_size_text/auto_size_text.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_speed_dial/flutter_speed_dial.dart';
 import 'package:randomfut/algorithms/sorteio.dart';
@@ -39,7 +40,7 @@ class _ListaCadasCasState extends State<ListaCadasCas> {
           ),
         ],
         centerTitle: true,
-        title: Text("$titleCont"),
+        title: AutoSizeText("$titleCont",maxFontSize: 30,maxLines: 1,),
         leading: Image.asset('./assets/images/iconeJogador.png'),
         backgroundColor: Color(0xFF008000),
         elevation: 0,

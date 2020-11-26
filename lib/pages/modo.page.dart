@@ -1,3 +1,4 @@
+import 'package:auto_size_text/auto_size_text.dart';
 import 'package:flutter/material.dart';
 import 'package:randomfut/pages/listaCadasCamp.dart';
 import 'package:randomfut/pages/listaCadasCas.page.dart';
@@ -10,12 +11,7 @@ class ModoPage extends StatelessWidget {
         actions: [
           Container(
             padding: EdgeInsets.only(right: 40),
-            child: Image.asset(
-              './assets/images/icone-informacao.png',
-              height: 25,
-              width: 25,
-              fit: BoxFit.contain,
-            ),
+            child: Icon(Icons.info_outline_rounded),
           )
         ],
         backgroundColor: Color(0xFF41BC3F),
@@ -86,9 +82,12 @@ class ModoPage extends StatelessWidget {
                 elevation: 8,
                 shape: new RoundedRectangleBorder(
                     borderRadius: new BorderRadius.circular(30.0)),
-                child: Text(
+                child: AutoSizeText(
                   "MODO CAMPEONATO",
                   style: TextStyle(color: Colors.white, fontSize: 20),
+                  minFontSize: 15,
+                  maxFontSize: 40,
+                  maxLines: 1,
                 ),
                 color: Color(0xFF008000),
               ),

@@ -1,4 +1,5 @@
 import 'dart:async';
+import 'package:auto_size_text/auto_size_text.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:percent_indicator/circular_percent_indicator.dart';
@@ -176,12 +177,15 @@ class _CountDownTimerState extends State<CountDownTimer> {
                   animateFromLastPercent: true,
                   radius: 200.0,
                   progressColor: Colors.white,
-                  center: Text(
+                  center: AutoSizeText(
                     "${formatter.format(min)}:${formatter.format(sec)}",
                     style: TextStyle(
                       color: Colors.white,
                       fontSize: 60.0,
                     ),
+                    maxLines: 1,
+                    minFontSize: 40,
+
                   ),
                 ),
               ),

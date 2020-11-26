@@ -1,3 +1,4 @@
+import 'package:auto_size_text/auto_size_text.dart';
 import 'package:flutter/material.dart';
 
 var tempoJogo = _itemSelecionado1 == 'Selecione a opção (opção padrão: 5)'
@@ -53,7 +54,7 @@ class _ConfigTempoState extends State<ConfigTempo> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text('Configuração de Tempo'),
+        title: AutoSizeText('Configuração de Tempo',maxFontSize: 30,maxLines: 1,),
         actions: [
           IconButton(
               icon: Icon(Icons.save),
@@ -72,7 +73,7 @@ class _ConfigTempoState extends State<ConfigTempo> {
               padding: const EdgeInsets.all(20.0),
               child: Column(
                 children: [
-                  Text(
+                  AutoSizeText(
                     "Tempo de partida:",
                     style: TextStyle(fontSize: 20),
                   ),
@@ -91,9 +92,11 @@ class _ConfigTempoState extends State<ConfigTempo> {
                   SizedBox(
                     height: 60,
                   ),
-                  Text(
+                  AutoSizeText(
                     "Término de partida por número de gols:",
                     style: TextStyle(fontSize: 20),
+                    minFontSize: 15,
+                    maxLines: 2,
                   ),
                   DropdownButton(
                     items: _decisao.map((String dropDownStringItem) {
@@ -113,9 +116,11 @@ class _ConfigTempoState extends State<ConfigTempo> {
                         SizedBox(
                           height: 60,
                         ),
-                        Text(
+                        AutoSizeText(
                           "Quantidade de gols para término:",
                           style: TextStyle(fontSize: 20),
+                          minFontSize: 15,
+                          maxLines: 2,
                         ),
                         DropdownButton(
                           items: _decisaoGols.map((String dropDownStringItem) {

@@ -1,3 +1,4 @@
+import 'package:auto_size_text/auto_size_text.dart';
 import 'package:flutter/material.dart';
 import 'package:randomfut/pages/listaCadasCas.page.dart';
 
@@ -86,7 +87,7 @@ class _ConfigTimeState extends State<ConfigTime> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text('Configuração de Times'),
+        title: AutoSizeText('Configuração de Times',maxFontSize: 30,maxLines: 1,),
         actions: [
           IconButton(
               icon: Icon(Icons.save),
@@ -115,9 +116,12 @@ class _ConfigTimeState extends State<ConfigTime> {
             key: _formTime,
             child: Column(
               children: [
-                Text(
+                AutoSizeText(
                   "Numero de Times",
                   style: TextStyle(fontSize: 20),
+                  minFontSize: 15,
+                  maxFontSize: 30,
+                  maxLines: 1,
                 ),
                 DropdownButton(
                   items: _decisaoTime.map((String dropDownStringItem) {
@@ -130,6 +134,7 @@ class _ConfigTimeState extends State<ConfigTime> {
                     _selecaoNTime(novoItemSelecionado);
                   },
                   hint: Text(_itemSelecionado1),
+
                 ),
                 Visibility(
                   visible: visibilidade,
