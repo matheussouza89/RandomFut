@@ -11,7 +11,14 @@ class ModoPage extends StatelessWidget {
         actions: [
           Container(
             padding: EdgeInsets.only(right: 40),
-            child: Icon(Icons.info_outline_rounded),
+            child: IconButton(
+              icon: Icon(Icons.info_outline_rounded),
+              onPressed: () {
+                showDialog(
+                    context: context,
+                    builder: (BuildContext context) => _infoDialog(context));
+              },
+            ),
           )
         ],
         backgroundColor: Color(0xFF41BC3F),
@@ -97,4 +104,46 @@ class ModoPage extends StatelessWidget {
       ),
     );
   }
+}
+
+Widget _infoDialog(BuildContext context) {
+  return new AlertDialog(
+    title: const Text('Info. Modos de jogo'),
+    content: new Column(
+      mainAxisSize: MainAxisSize.min,
+      crossAxisAlignment: CrossAxisAlignment.start,
+      children: <Widget>[
+        Text(
+          "Modo Casual",
+          style: TextStyle(
+            fontWeight: FontWeight.w800,
+          ),
+        ),
+        SizedBox(height: 10,),
+        Text(
+          "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nam eget rhoncus ante. Integer malesuada elit eget dui hendrerit, id scelerisque sem pulvinar. Ut a neque sed odio tempus rutrum luctus sed sapien. Suspendisse sodales, sapien ac feugiat luctus, risus dolor facilisis justo, quis sollicitudin ex nunc ut nisi. Aliquam efficitur velit eget felis mattis, fermentum consectetur leo eleifend. In hac habitasse platea dictumst. Quisque ac sem sit amet massa consectetur imperdiet.",
+          textAlign: TextAlign.justify,
+        ),
+        SizedBox(height: 15,),
+        Text(
+          "Modo Campeonato",
+          style: TextStyle(
+            fontWeight: FontWeight.w800,
+          ),
+        ),
+        SizedBox(height: 10,),
+        Text(
+          "Pellentesque efficitur malesuada mauris, vitae porta elit sagittis a. Vestibulum molestie, nisi vitae tempus imperdiet, massa nisi pellentesque dolor, id tempus dui tellus a metus. Praesent vel porta nulla. Nam lobortis volutpat ex in condimentum. Nam orci purus, hendrerit iaculis erat ac, fermentum placerat justo.",
+          textAlign: TextAlign.justify,
+        )
+      ],
+    ),
+    actions: [
+      FlatButton(
+          onPressed: () {
+            Navigator.of(context).pop();
+          },
+          child: Text("Entendido!"))
+    ],
+  );
 }
