@@ -31,7 +31,7 @@ class _SorteadosCasState extends State<SorteadosCas> {
         label: Text("Ir para a Partida"),
         icon: Icon(Icons.sports_soccer),
       ),
-      body: ListView(
+      body: ListView( 
         children: [
           Column(
             children: [

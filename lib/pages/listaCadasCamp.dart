@@ -1,4 +1,4 @@
-import 'package:auto_size_text/auto_size_text.dart';
+/*import 'package:auto_size_text/auto_size_text.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_speed_dial/flutter_speed_dial.dart';
 import 'package:randomfut/components/team_tile.dart';
@@ -62,4 +62,4 @@ class _ListaCadasCampState extends State<ListaCadasCamp> {
       ),
     );
   }
-}
+}*/

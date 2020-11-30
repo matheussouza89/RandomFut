@@ -1,17 +1,30 @@
 import 'package:auto_size_text/auto_size_text.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:flutter_rating_bar/flutter_rating_bar.dart';
 import 'package:flutter_speed_dial/flutter_speed_dial.dart';
 import 'package:randomfut/algorithms/sorteio.dart';
-import 'package:randomfut/components/player_tile.dart';
+import 'package:randomfut/bloc/player_bloc.dart';
+import 'package:randomfut/db/database_provider.dart';
+import 'package:randomfut/events/delete_player.dart';
+import 'package:randomfut/events/set_players.dart';
+import 'package:randomfut/events/update_player.dart';
 import 'package:randomfut/models/player.dart';
 import 'package:randomfut/pages/campoSuperior.dart';
 import 'package:randomfut/pages/sorteadosCas.dart';
 import 'package:randomfut/pages/timer.page.dart';
-import 'package:randomfut/provider/players.dart';
-import 'package:provider/provider.dart';
 import 'package:randomfut/routes/app_routes.dart';
 import 'package:randomfut/views/config_Tempo.dart';
 import 'package:randomfut/views/config_Time.dart';
+import 'package:randomfut/views/player_form.dart';
+
+var notSelected = true;
+var isShowing = false;
+var selection = 0xFF41BC3F;
+var titleCont = '';
+var jgdr = 0;
+var vetJogador = [];
+int botaoSorteio = 0xFF008000;
 
 class ListaCadasCas extends StatefulWidget {
   @override
@@ -19,10 +32,35 @@ class ListaCadasCas extends StatefulWidget {
 }
 
 class _ListaCadasCasState extends State<ListaCadasCas> {
+  @override
+  initState() {
+    super.initState();
+    DatabaseProvider.db.getPlayers().then((playerList) {
+      BlocProvider.of<PlayerBloc>(context).add(
+        SetPlayers(playerList),
+      );
+    });
+    DatabaseProvider.db.getCount().then((x) {
+      print(x);
+      for (int i = 0; i < x; i++) {
+        Player player = Player(checked: false);
+        DatabaseProvider.db.update(player).then(
+              (storedPlayer) => BlocProvider.of<PlayerBloc>(context).add(
+                UpdatePlayer(x, player),
+              ),
+            );
+      }
+    });
+    notSelected = true;
+    isShowing = false;
+    titleCont = '';
+    jgdr = 0;
+    vetJogador = [];
+    botaoSorteio = 0xFF008000;
+  }
 
   @override
   Widget build(BuildContext context) {
-    final Players players = Provider.of(context);
     return Scaffold(
       backgroundColor: Color(0xFF41BC3F),
       appBar: AppBar(
@@ -40,14 +78,160 @@ class _ListaCadasCasState extends State<ListaCadasCas> {
           ),
         ],
         centerTitle: true,
-        title: AutoSizeText("$titleCont",maxFontSize: 30,maxLines: 1,),
+        title: AutoSizeText(
+          "$titleCont",
+          maxFontSize: 30,
+          maxLines: 1,
+        ),
         leading: Image.asset('./assets/images/iconeJogador.png'),
         backgroundColor: Color(0xFF008000),
         elevation: 0,
       ),
-      body: ListView.builder(
-        itemCount: players.count,
-        itemBuilder: (ctx, i) => PlayerTile(players.byIndex(i)),
+      body: Container(
+        child: BlocConsumer<PlayerBloc, List<Player>>(
+          builder: (context, playerList) {
+            return Container(
+              color: Color(0xFF41BC3F),
+              child: ListView.builder(
+                itemBuilder: (BuildContext context, int index) {
+                  print("playerList: $playerList");
+
+                  Player player = playerList[index];
+                  final avatar = player.avatar == null || player.avatar.isEmpty
+                      ? CircleAvatar(
+                          child: Icon(
+                            Icons.person,
+                            size: 45,
+                          ),
+                          backgroundColor: Colors.grey[300],
+                          foregroundColor: Colors.grey[600],
+                        )
+                      : CircleAvatar(
+                          child: Image.asset(player.avatar),
+                        );
+                  return Container(
+                    color: Color(selection =
+                        player.checked == false ? 0xFF41BC3F : 0xFF6ECE6C),
+                    child: Column(
+                      children: [
+                        ListTile(
+                          leading: Container(
+                            child: Container(
+                              height: 75,
+                              width: 75,
+                              child: avatar,
+                            ),
+                          ),
+                          title: Text(player.name),
+                          subtitle: Column(
+                            children: [
+                              Align(
+                                child: Text(player.position),
+                                alignment: Alignment.centerLeft,
+                              ),
+                              Align(
+                                child: RatingBarIndicator(
+                                  rating: player.rate,
+                                  itemBuilder: (context, index) => Icon(
+                                    Icons.star,
+                                    color: Colors.amber,
+                                  ),
+                                  itemCount: 5,
+                                  itemSize: 20.0,
+                                ),
+                                alignment: Alignment.centerLeft,
+                              ),
+                            ],
+                          ),
+                          isThreeLine: true,
+                          onLongPress: () {
+                            if (jgdr == 0) {
+                              toggleSelection(index, player.name, player.avatar,
+                                  player.position, player.rate, player.checked);
+                            }
+                          },
+                          onTap: () {
+                            if (jgdr >= 1) {
+                              toggleSelection(index, player.name, player.avatar,
+                                  player.position, player.rate, player.checked);
+                            }
+                          },
+                          trailing: Visibility(
+                            visible: notSelected,
+                            child: Container(
+                              width: 100,
+                              child: Row(
+                                children: [
+                                  IconButton(
+                                      icon: Icon(Icons.edit),
+                                      onPressed: () {
+                                        Navigator.push(
+                                            context,
+                                            MaterialPageRoute(
+                                                builder: (context) =>
+                                                    PlayerForm(
+                                                      player: player,
+                                                      playerIndex: index,
+                                                    )));
+                                      }),
+                                  IconButton(
+                                    icon: Icon(Icons.delete),
+                                    onPressed: () {
+                                      showDialog(
+                                        context: context,
+                                        builder: (ctx) => AlertDialog(
+                                          title: Text("Excluir Jogador"),
+                                          content: Text(
+                                              'Tem certeza que quer excluir este jogador?'),
+                                          actions: [
+                                            FlatButton(
+                                              onPressed: () {
+                                                Navigator.of(context).pop();
+                                              },
+                                              child: Text('Não'),
+                                            ),
+                                            FlatButton(
+                                              onPressed: () {
+                                                DatabaseProvider.db
+                                                    .delete(player.id)
+                                                    .then((_) {
+                                                  BlocProvider.of<PlayerBloc>(
+                                                          context)
+                                                      .add(
+                                                    DeletePlayer(index),
+                                                  );
+                                                  Navigator.of(context).pop();
+                                                });
+                                              },
+                                              child: Text('Sim'),
+                                            ),
+                                          ],
+                                        ),
+                                      );
+                                    },
+                                    color: Colors.red,
+                                  )
+                                ],
+                              ),
+                            ),
+                          ),
+                        ),
+                        Divider(
+                          height: 0,
+                          indent: 40,
+                          endIndent: 10,
+                          color: Colors.black26,
+                        ),
+                      ],
+                    ),
+                  );
+                },
+                itemCount: playerList.length,
+              ),
+            );
+          },
+          listener: (BuildContext context, playerList) {},
+        ),
       ),
       floatingActionButton: Visibility(
         visible: isShowing,
@@ -98,5 +282,83 @@ class _ListaCadasCasState extends State<ListaCadasCas> {
         ),
       ),
     );
+  }
+
+  toggleSelection(playerIndex, name, avatar, position, rate, checked) {
+    setState(() {
+      if (jgdr < int.parse(nJogadores)) {
+        if (checked == false) {
+          Player player = Player(
+            name: name,
+            avatar: avatar,
+            position: position,
+            rate: rate,
+            checked: true,
+          );
+          DatabaseProvider.db.update(player).then(
+                (storedPlayer) => BlocProvider.of<PlayerBloc>(context).add(
+                  UpdatePlayer(playerIndex, player),
+                ),
+              );
+          jgdr++;
+          titleCont = "Selecionados: $jgdr/$nJogadores";
+          vetJogador.add(name);
+          print(vetJogador);
+        } else {
+          Player player = Player(
+            name: name,
+            avatar: avatar,
+            position: position,
+            rate: rate,
+            checked: false,
+          );
+          DatabaseProvider.db.update(player).then(
+                (storedPlayer) => BlocProvider.of<PlayerBloc>(context).add(
+                  UpdatePlayer(playerIndex, player),
+                ),
+              );
+          jgdr--;
+          titleCont = "Selecionados: $jgdr/$nJogadores";
+          for (var i = 0; i < vetJogador.length; i++) {
+            if (vetJogador[i] == name) {
+              vetJogador.removeAt(i);
+              i = vetJogador.length;
+            }
+          }
+          print(vetJogador);
+        }
+        if (jgdr == 0) {
+          titleCont = "";
+        }
+      } else {}
+      if ((checked == true) && (jgdr == int.parse(nJogadores))) {
+        Player player = Player(
+          name: name,
+          avatar: avatar,
+          position: position,
+          rate: rate,
+          checked: false,
+        );
+        DatabaseProvider.db.update(player).then(
+              (storedPlayer) => BlocProvider.of<PlayerBloc>(context).add(
+                UpdatePlayer(playerIndex, player),
+              ),
+            );
+        jgdr--;
+        titleCont = "Selecionados: $jgdr/$nJogadores";
+      }
+      if (jgdr <= 0) {
+        notSelected = true;
+        isShowing = false;
+      } else {
+        notSelected = false;
+        isShowing = true;
+      }
+      if (jgdr == int.parse(nJogadores)) {
+        botaoSorteio = 0xFF008000;
+      } else {
+        botaoSorteio = 0xFF919191;
+      }
+    });
   }
 }

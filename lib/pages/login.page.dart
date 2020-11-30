@@ -70,12 +70,6 @@ class LoginPage extends StatelessWidget {
                 width: 310,
                 child: RaisedButton(
                   onPressed: () => {
-                    Navigator.pushReplacement(
-                      context,
-                      MaterialPageRoute(
-                        builder: (context) => CountDownTimer(),
-                      ),
-                    )
                   },
                   elevation: 8,
                   shape: new RoundedRectangleBorder(

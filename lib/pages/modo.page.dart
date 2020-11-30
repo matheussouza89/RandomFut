@@ -79,12 +79,7 @@ class ModoPage extends StatelessWidget {
               width: 310,
               child: RaisedButton(
                 onPressed: () => {
-                  Navigator.push(
-                    context,
-                    MaterialPageRoute(
-                      builder: (context) => ListaCadasCamp(),
-                    ),
-                  )
+                  
                 },
                 elevation: 8,
                 shape: new RoundedRectangleBorder(

@@ -5,6 +5,7 @@ import 'package:flutter/material.dart';
 import 'package:percent_indicator/circular_percent_indicator.dart';
 import 'package:randomfut/views/config_Tempo.dart';
 import 'package:intl/intl.dart';
+import 'package:randomfut/views/config_Time.dart';
 
 class CountDownTimer extends StatefulWidget {
   @override
@@ -121,16 +122,22 @@ class _CountDownTimerState extends State<CountDownTimer> {
                   },
                 ),
               ),
-              ListTile(
-                title: Text("Mudar nome do time 3"),
-                subtitle: TextField(
-                  onChanged: (value) {},
+              Visibility(
+                visible: visibilidadeTime3,
+                              child: ListTile(
+                  title: Text("Mudar nome do time 3"),
+                  subtitle: TextField(
+                    onChanged: (value) {},
+                  ),
                 ),
               ),
-              ListTile(
-                title: Text("Mudar nome do time 4"),
-                subtitle: TextField(
-                  onChanged: (value) {},
+              Visibility(
+                visible: visibilidadeTime4,
+                              child: ListTile(
+                  title: Text("Mudar nome do time 4"),
+                  subtitle: TextField(
+                    onChanged: (value) {},
+                  ),
                 ),
               ),
               Divider(),

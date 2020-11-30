@@ -1,12 +1,13 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:randomfut/bloc/player_bloc.dart';
 import 'package:randomfut/pages/listaCadasCamp.dart';
+import 'package:randomfut/pages/listaCadasCas.page.dart';
 import 'package:randomfut/pages/login.page.dart';
-import 'package:provider/provider.dart';
-import 'package:randomfut/provider/players.dart';
-import 'package:randomfut/provider/teams.dart';
-import 'package:randomfut/provider/playersTeam.dart';
+import 'package:randomfut/pages/modo.page.dart';
 import 'package:randomfut/routes/app_routes.dart';
 import 'package:randomfut/views/player_form.dart';
+import 'bloc/player_bloc.dart';
 
 void main() => runApp(MyApp());
 
@@ -14,19 +15,8 @@ class MyApp extends StatelessWidget {
   // This widget is the root of your application.
   @override
   Widget build(BuildContext context) {
-    return MultiProvider(
-      providers: [
-        ChangeNotifierProvider(
-          create: (ctx) => Players(),
-        ),
-        ChangeNotifierProvider(
-          create: (ctx) => Teams(),
-        ),
-        ChangeNotifierProvider(
-          create: (ctx) => PlayersTeam(),
-        ),
-        
-      ],
+    return BlocProvider<PlayerBloc>(
+      create: (context) => PlayerBloc(),
       child: MaterialApp(
         title: 'RandomFut',
         debugShowCheckedModeBanner: false,
@@ -35,14 +25,10 @@ class MyApp extends StatelessWidget {
         ),
         routes: {
           AppRoutes.HOME: (_) => LoginPage(),
-          AppRoutes.CAMPEONATO: (_) => LoginPage(),
-          AppRoutes.CAMPEONATOTIPO: (_) => LoginPage(),
-          AppRoutes.CASUAL: (_) => LoginPage(),
-          AppRoutes.CASUALTIPO: (_) => LoginPage(),
-          AppRoutes.LISTACADASCAS: (_) => LoginPage(),
-          AppRoutes.MODO: (_) => LoginPage(),
+          AppRoutes.LISTACADASCAS: (_) => ListaCadasCas(),
+          AppRoutes.MODO: (_) => ModoPage(),
           AppRoutes.PLAYERFORM: (_) => PlayerForm(),
-          AppRoutes.LISTACADASCAMP: (_) => ListaCadasCamp(),
+         // AppRoutes.LISTACADASCAMP: (_) => ListaCadasCamp(),
         },
       ),
     );
