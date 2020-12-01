@@ -1,3 +1,4 @@
+import 'dart:io';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_rating_bar/flutter_rating_bar.dart';
@@ -7,6 +8,8 @@ import 'package:randomfut/events/add_player.dart';
 import 'package:randomfut/events/update_player.dart';
 import 'package:randomfut/models/player.dart';
 import 'package:randomfut/pages/listaCadasCas.page.dart';
+import 'package:image_cropper/image_cropper.dart';
+import 'package:image_picker/image_picker.dart';
 
 class PlayerForm extends StatefulWidget {
   final Player player;
@@ -26,9 +29,12 @@ class _PlayerFormState extends State<PlayerForm> {
   String _avatar;
   double _rate;
   bool _checked;
-  String _cor;
   bool iconeSave1;
   bool iconeSave2;
+  dynamic imagem;
+  String avatarPicker;
+
+  final picker = ImagePicker();
 
   final _form = GlobalKey<FormState>();
 
@@ -36,19 +42,34 @@ class _PlayerFormState extends State<PlayerForm> {
   void initState() {
     super.initState();
     if (widget.player != null) {
-      print(widget.playerIndex);
       _name = widget.player.name;
       _position = widget.player.position;
       _avatar = widget.player.avatar;
       _rate = widget.player.rate;
       _checked = widget.player.checked;
+      avatarPicker;
       iconeSave1 = false;
       iconeSave2 = true;
+      print(_avatar);
     } else {
       _rate = 0.0;
       iconeSave1 = true;
       iconeSave2 = false;
     }
+  }
+
+  Future getImage() async {
+    final pickedFile = await picker.getImage(source: ImageSource.gallery);
+
+    setState(() {
+      if (pickedFile != null) {
+        avatarPicker = pickedFile.path.toString();
+        _avatar = avatarPicker;
+        print(_avatar);
+      } else {
+        print('No image selected.');
+      }
+    });
   }
 
   @override
@@ -65,14 +86,14 @@ class _PlayerFormState extends State<PlayerForm> {
                 final isValid = _form.currentState.validate();
                 if (isValid) {
                   _form.currentState.save();
+                  print(_avatar);
                   Player player = Player(
-                      name: _name,
-                      position: _position,
-                      avatar: _avatar,
-                      rate: _rate,
-                      checked: false,
-                      );
-
+                    name: _name,
+                    position: _position,
+                    avatar: _avatar,
+                    rate: _rate,
+                    checked: false,
+                  );
                   DatabaseProvider.db.insert(player).then(
                         (storedPlayer) =>
                             BlocProvider.of<PlayerBloc>(context).add(
@@ -98,14 +119,16 @@ class _PlayerFormState extends State<PlayerForm> {
                 onPressed: () {
                   final isValid = _form.currentState.validate();
                   if (isValid) {
+                    print(
+                        "OOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOO");
+                    print(_avatar);
                     _form.currentState.save();
                     Player player = Player(
-                        name: _name,
-                        position: _position,
-                        avatar: _avatar,
-                        rate: _rate,
-                       );
-
+                      name: _name,
+                      position: _position,
+                      avatar: _avatar,
+                      rate: _rate,
+                    );
                     DatabaseProvider.db.update(widget.player).then(
                           (storedPlayer) =>
                               BlocProvider.of<PlayerBloc>(context).add(
@@ -131,6 +154,17 @@ class _PlayerFormState extends State<PlayerForm> {
           key: _form,
           child: Column(
             children: [
+              Container(
+                width: 200,
+                height: 200,
+                color: Colors.amber,
+                child: imagem = _avatar == null
+                    ? Icon(
+                        Icons.person,
+                        size: 60,
+                      )
+                    : Image.file(File('$_avatar')),
+              ),
               TextFormField(
                 initialValue: _name,
                 decoration: InputDecoration(labelText: 'Nome'),
@@ -184,7 +218,9 @@ class _PlayerFormState extends State<PlayerForm> {
               ),
               FloatingActionButton(
                 child: Icon(Icons.file_upload),
-                onPressed: () => {},
+                onPressed: () {
+                  getImage();
+                },
               ),
             ],
           ),

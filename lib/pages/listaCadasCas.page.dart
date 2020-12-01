@@ -1,3 +1,4 @@
+import 'dart:io';
 import 'package:auto_size_text/auto_size_text.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -11,8 +12,6 @@ import 'package:randomfut/events/set_players.dart';
 import 'package:randomfut/events/update_player.dart';
 import 'package:randomfut/models/player.dart';
 import 'package:randomfut/pages/campoSuperior.dart';
-import 'package:randomfut/pages/sorteadosCas.dart';
-import 'package:randomfut/pages/timer.page.dart';
 import 'package:randomfut/routes/app_routes.dart';
 import 'package:randomfut/views/config_Tempo.dart';
 import 'package:randomfut/views/config_Time.dart';
@@ -95,9 +94,8 @@ class _ListaCadasCasState extends State<ListaCadasCas> {
               child: ListView.builder(
                 itemBuilder: (BuildContext context, int index) {
                   print("playerList: $playerList");
-
                   Player player = playerList[index];
-                  final avatar = player.avatar == null || player.avatar.isEmpty
+                  final avatar = player.avatar == null
                       ? CircleAvatar(
                           child: Icon(
                             Icons.person,
@@ -107,7 +105,7 @@ class _ListaCadasCasState extends State<ListaCadasCas> {
                           foregroundColor: Colors.grey[600],
                         )
                       : CircleAvatar(
-                          child: Image.asset(player.avatar),
+                          child: Image.file(new File(player.avatar)),
                         );
                   return Container(
                     color: Color(selection =

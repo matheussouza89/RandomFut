@@ -1,3 +1,4 @@
+import 'dart:io';
 import 'package:randomfut/db/database_provider.dart';
 
 class Player {
@@ -41,8 +42,7 @@ class Player {
     rate = map[DatabaseProvider.colRate];
     checked = map[DatabaseProvider.colChecked] == 1;
   }
-
-  @override
+    @override
   String toString() {
     return "PLayer => (id:$id ,name:$name ,position:$position ,avatar:$avatar ,rate:$rate ,checked:$checked)";
   }
