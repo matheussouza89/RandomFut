@@ -2,6 +2,26 @@ import 'package:path/path.dart';
 import 'package:randomfut/models/player.dart';
 import 'package:sqflite/sqflite.dart';
 
+class Listagem {
+  int qtde;
+  int id;
+  String name;
+  String position;
+  String avatar;
+  double rate;
+  bool checked;
+
+  Listagem({
+    this.qtde,
+    this.id,
+    this.name,
+    this.position,
+    this.avatar,
+    this.rate,
+    this.checked,
+  });
+}
+
 class DatabaseProvider {
   static const String playerTable = 'player';
   static const String colId = 'id';
@@ -72,12 +92,37 @@ class DatabaseProvider {
     return playerList;
   }
 
-  Future<int>  getCount() async {
+  Future<List<dynamic>> getCount() async {
     final db = await database;
 
     List<Map<String, dynamic>> x =
         await db.rawQuery('SELECT COUNT (*) from $playerTable');
-    int resultado = Sqflite.firstIntValue(x);
+    List<Map<String, dynamic>> a =
+        await db.rawQuery('SELECT $colId from $playerTable');
+    List<Map<String, dynamic>> b =
+        await db.rawQuery('SELECT $colName from $playerTable');
+    List<Map<String, dynamic>> c =
+        await db.rawQuery('SELECT $colAvatar from $playerTable');
+    List<Map<String, dynamic>> d =
+        await db.rawQuery('SELECT $colPosition from $playerTable');
+    List<Map<String, dynamic>> e =
+        await db.rawQuery('SELECT $colRate from $playerTable');
+    List<Map<String, dynamic>> f =
+        await db.rawQuery('SELECT $colChecked from $playerTable');
+    var listLenght = Sqflite.firstIntValue(x);
+    var resultado = [];
+    var zezultado = [];
+    for (int i = 0; i < listLenght; i++) {
+      zezultado.add(listLenght);
+      zezultado.add(a);
+      zezultado.add(b);
+      zezultado.add(c);
+      zezultado.add(d);
+      zezultado.add(e);
+      zezultado.add(f);
+      resultado.add(zezultado);
+    }
+
     return resultado;
   }
 
@@ -90,7 +135,11 @@ class DatabaseProvider {
   Future<int> delete(int id) async {
     final db = await database;
 
-    return await db.delete(playerTable, where: "id = ?", whereArgs: [id]);
+    return await db.delete(
+      playerTable,
+      where: "id = ?",
+      whereArgs: [id],
+    );
   }
 
   Future<int> update(Player player) async {

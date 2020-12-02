@@ -24,6 +24,7 @@ class PlayerForm extends StatefulWidget {
 }
 
 class _PlayerFormState extends State<PlayerForm> {
+  int _id;
   String _name;
   String _position;
   String _avatar;
@@ -42,12 +43,12 @@ class _PlayerFormState extends State<PlayerForm> {
   void initState() {
     super.initState();
     if (widget.player != null) {
+      _id = widget.player.id;
       _name = widget.player.name;
       _position = widget.player.position;
       _avatar = widget.player.avatar;
       _rate = widget.player.rate;
       _checked = widget.player.checked;
-      avatarPicker;
       iconeSave1 = false;
       iconeSave2 = true;
       print(_avatar);
@@ -90,8 +91,8 @@ class _PlayerFormState extends State<PlayerForm> {
                   Player player = Player(
                     name: _name,
                     position: _position,
-                    avatar: _avatar,
                     rate: _rate,
+                    avatar: _avatar,
                     checked: false,
                   );
                   DatabaseProvider.db.insert(player).then(
@@ -121,20 +122,21 @@ class _PlayerFormState extends State<PlayerForm> {
                   if (isValid) {
                     print(
                         "OOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOO");
-                    print(_avatar);
                     _form.currentState.save();
+                    print(widget.player);
                     Player player = Player(
+                      id: _id,
                       name: _name,
                       position: _position,
-                      avatar: _avatar,
                       rate: _rate,
+                      avatar: _avatar,
+                      checked: _checked,
                     );
-                    DatabaseProvider.db.update(widget.player).then(
-                          (storedPlayer) =>
-                              BlocProvider.of<PlayerBloc>(context).add(
-                            UpdatePlayer(widget.playerIndex, player),
-                          ),
-                        );
+                    DatabaseProvider.db.update(player).then((storedPlayer) {
+                      BlocProvider.of<PlayerBloc>(context).add(
+                        UpdatePlayer(widget.playerIndex, player),
+                      );
+                    });
                     Navigator.of(context).pop();
                     Navigator.of(context).pop();
                     Navigator.push(
@@ -157,11 +159,11 @@ class _PlayerFormState extends State<PlayerForm> {
               Container(
                 width: 200,
                 height: 200,
-                color: Colors.amber,
+                color: Colors.grey[300],
                 child: imagem = _avatar == null
                     ? Icon(
                         Icons.person,
-                        size: 60,
+                        size: 150,
                       )
                     : Image.file(File('$_avatar')),
               ),
@@ -178,7 +180,10 @@ class _PlayerFormState extends State<PlayerForm> {
 
                   return null;
                 },
-                onSaved: (value) => _name = value,
+                onSaved: (value) {
+                  _name = value;
+                  print(_name);
+                },
               ),
               TextFormField(
                 initialValue: _position,

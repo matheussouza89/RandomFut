@@ -35,21 +35,16 @@ class _ListaCadasCasState extends State<ListaCadasCas> {
   initState() {
     super.initState();
     DatabaseProvider.db.getPlayers().then((playerList) {
+      print(playerList);
       BlocProvider.of<PlayerBloc>(context).add(
         SetPlayers(playerList),
       );
     });
     DatabaseProvider.db.getCount().then((x) {
       print(x);
-      for (int i = 0; i < x; i++) {
-        Player player = Player(checked: false);
-        DatabaseProvider.db.update(player).then(
-              (storedPlayer) => BlocProvider.of<PlayerBloc>(context).add(
-                UpdatePlayer(x, player),
-              ),
-            );
-      }
+      print("OOOOOOOOOOOOOOOOOOOOOOOOOOO");
     });
+    //Inicializa as variaveis para o valor de origem
     notSelected = true;
     isShowing = false;
     titleCont = '';
@@ -144,14 +139,26 @@ class _ListaCadasCasState extends State<ListaCadasCas> {
                           isThreeLine: true,
                           onLongPress: () {
                             if (jgdr == 0) {
-                              toggleSelection(index, player.name, player.avatar,
-                                  player.position, player.rate, player.checked);
+                              toggleSelection(
+                                  index,
+                                  player.id,
+                                  player.name,
+                                  player.avatar,
+                                  player.position,
+                                  player.rate,
+                                  player.checked);
                             }
                           },
                           onTap: () {
                             if (jgdr >= 1) {
-                              toggleSelection(index, player.name, player.avatar,
-                                  player.position, player.rate, player.checked);
+                              toggleSelection(
+                                  index,
+                                  player.id,
+                                  player.name,
+                                  player.avatar,
+                                  player.position,
+                                  player.rate,
+                                  player.checked);
                             }
                           },
                           trailing: Visibility(
@@ -163,6 +170,7 @@ class _ListaCadasCasState extends State<ListaCadasCas> {
                                   IconButton(
                                       icon: Icon(Icons.edit),
                                       onPressed: () {
+                                        print(index);
                                         Navigator.push(
                                             context,
                                             MaterialPageRoute(
@@ -282,11 +290,12 @@ class _ListaCadasCasState extends State<ListaCadasCas> {
     );
   }
 
-  toggleSelection(playerIndex, name, avatar, position, rate, checked) {
+  toggleSelection(playerIndex, id, name, avatar, position, rate, checked) {
     setState(() {
       if (jgdr < int.parse(nJogadores)) {
         if (checked == false) {
           Player player = Player(
+            id: id,
             name: name,
             avatar: avatar,
             position: position,
@@ -304,6 +313,7 @@ class _ListaCadasCasState extends State<ListaCadasCas> {
           print(vetJogador);
         } else {
           Player player = Player(
+            id: id,
             name: name,
             avatar: avatar,
             position: position,
@@ -331,6 +341,7 @@ class _ListaCadasCasState extends State<ListaCadasCas> {
       } else {}
       if ((checked == true) && (jgdr == int.parse(nJogadores))) {
         Player player = Player(
+          id: id,
           name: name,
           avatar: avatar,
           position: position,
