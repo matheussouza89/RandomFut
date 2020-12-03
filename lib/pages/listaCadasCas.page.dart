@@ -34,15 +34,12 @@ class _ListaCadasCasState extends State<ListaCadasCas> {
   @override
   initState() {
     super.initState();
+    DatabaseProvider.db.upadateCheck();
     DatabaseProvider.db.getPlayers().then((playerList) {
       print(playerList);
       BlocProvider.of<PlayerBloc>(context).add(
         SetPlayers(playerList),
       );
-    });
-    DatabaseProvider.db.getCount().then((x) {
-      print(x);
-      print("OOOOOOOOOOOOOOOOOOOOOOOOOOO");
     });
     //Inicializa as variaveis para o valor de origem
     notSelected = true;

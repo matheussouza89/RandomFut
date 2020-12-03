@@ -1,5 +1,3 @@
-import 'package:flutter/cupertino.dart';
-
 class Team {
   final String id;
   final String name;

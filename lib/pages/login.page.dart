@@ -2,7 +2,6 @@ import 'package:auto_size_text/auto_size_text.dart';
 import 'package:flutter/material.dart';
 import 'package:randomfut/pages/listaPlayerTeam.dart';
 import 'package:randomfut/pages/modo.page.dart';
-import 'package:randomfut/pages/timer.page.dart';
 
 class LoginPage extends StatelessWidget {
   @override

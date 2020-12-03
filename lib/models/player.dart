@@ -1,4 +1,3 @@
-import 'dart:io';
 import 'package:randomfut/db/database_provider.dart';
 
 class Player {

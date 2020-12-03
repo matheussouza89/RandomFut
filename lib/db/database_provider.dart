@@ -111,16 +111,14 @@ class DatabaseProvider {
         await db.rawQuery('SELECT $colChecked from $playerTable');
     var listLenght = Sqflite.firstIntValue(x);
     var resultado = [];
-    var zezultado = [];
     for (int i = 0; i < listLenght; i++) {
-      zezultado.add(listLenght);
-      zezultado.add(a);
-      zezultado.add(b);
-      zezultado.add(c);
-      zezultado.add(d);
-      zezultado.add(e);
-      zezultado.add(f);
-      resultado.add(zezultado);
+      resultado.add(listLenght);
+      resultado.add(a);
+      resultado.add(b);
+      resultado.add(c);
+      resultado.add(d);
+      resultado.add(e);
+      resultado.add(f);
     }
 
     return resultado;
@@ -151,5 +149,10 @@ class DatabaseProvider {
       where: "id = ?",
       whereArgs: [player.id],
     );
+  }
+
+  Future<void> upadateCheck() async {
+    final db = await database;
+    return await db.rawUpdate('UPDATE $playerTable SET $colChecked = 0');
   }
 }
