@@ -61,16 +61,23 @@ class _PlayerFormState extends State<PlayerForm> {
 
   Future getImage() async {
     final pickedFile = await picker.getImage(source: ImageSource.gallery);
-
+    if(pickedFile != null){
+      File cropped = await ImageCropper.cropImage(sourcePath: pickedFile.path, aspectRatio: CropAspectRatio(ratioX: 1, ratioY: 1),compressQuality: 100,maxWidth: 200,maxHeight: 200,compressFormat: ImageCompressFormat.jpg,androidUiSettings: AndroidUiSettings(
+      toolbarColor: Colors.deepOrange,
+      toolbarTitle: "RPS Cropper",
+      statusBarColor: Colors.deepOrange.shade900,
+      backgroundColor: Colors.white,
+    ));
     setState(() {
       if (pickedFile != null) {
-        avatarPicker = pickedFile.path.toString();
+        avatarPicker = cropped.path.toString();
         _avatar = avatarPicker;
         print(_avatar);
       } else {
         print('No image selected.');
       }
     });
+    }
   }
 
   @override
