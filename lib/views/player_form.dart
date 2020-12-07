@@ -59,24 +59,59 @@ class _PlayerFormState extends State<PlayerForm> {
     }
   }
 
-  Future getImage() async {
+  Future getImageGallery() async {
     final pickedFile = await picker.getImage(source: ImageSource.gallery);
-    if(pickedFile != null){
-      File cropped = await ImageCropper.cropImage(sourcePath: pickedFile.path, aspectRatio: CropAspectRatio(ratioX: 1, ratioY: 1),compressQuality: 100,maxWidth: 200,maxHeight: 200,compressFormat: ImageCompressFormat.jpg,androidUiSettings: AndroidUiSettings(
-      toolbarColor: Colors.deepOrange,
-      toolbarTitle: "RPS Cropper",
-      statusBarColor: Colors.deepOrange.shade900,
-      backgroundColor: Colors.white,
-    ));
-    setState(() {
-      if (pickedFile != null) {
-        avatarPicker = cropped.path.toString();
-        _avatar = avatarPicker;
-        print(_avatar);
-      } else {
-        print('No image selected.');
-      }
-    });
+    if (pickedFile != null) {
+      File cropped = await ImageCropper.cropImage(
+          sourcePath: pickedFile.path,
+          aspectRatio: CropAspectRatio(ratioX: 1, ratioY: 1),
+          compressQuality: 100,
+          maxWidth: 200,
+          maxHeight: 200,
+          compressFormat: ImageCompressFormat.jpg,
+          androidUiSettings: AndroidUiSettings(
+            toolbarColor: Colors.green,
+            toolbarTitle: "Recorte de Imagem",
+            statusBarColor: Colors.grey[600],
+            backgroundColor: Colors.white,
+          ));
+      setState(() {
+        if (pickedFile != null) {
+          avatarPicker = cropped.path.toString();
+          _avatar = avatarPicker;
+          print(_avatar);
+        } else {
+          print('No image selected.');
+        }
+      });
+    }
+  }
+
+  Future getImageCamera() async {
+    final pickedFile = await picker.getImage(source: ImageSource.camera);
+    if (pickedFile != null) {
+      File cropped = await ImageCropper.cropImage(
+          sourcePath: pickedFile.path,
+          aspectRatio: CropAspectRatio(ratioX: 1, ratioY: 1),
+          compressQuality: 100,
+          maxWidth: 200,
+          maxHeight: 200,
+          compressFormat: ImageCompressFormat.jpg,
+          androidUiSettings: AndroidUiSettings(
+            toolbarColor: Colors.green,
+            toolbarTitle: "Recorte de Imagem",
+            statusBarColor: Colors.grey[600],
+            backgroundColor: Colors.white,
+          ));
+      setState(() {
+        if (pickedFile != null) {
+          avatarPicker = cropped.path.toString();
+          _avatar = avatarPicker;
+          print(_avatar);
+        } else {
+          print('No image selected.');
+        }
+      });
     }
   }
 
@@ -127,8 +162,6 @@ class _PlayerFormState extends State<PlayerForm> {
                 onPressed: () {
                   final isValid = _form.currentState.validate();
                   if (isValid) {
-                    print(
-                        "OOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOO");
                     _form.currentState.save();
                     print(widget.player);
                     Player player = Player(
@@ -230,14 +263,58 @@ class _PlayerFormState extends State<PlayerForm> {
               ),
               FloatingActionButton(
                 child: Icon(Icons.file_upload),
-                onPressed: () {
-                  getImage();
-                },
+                onPressed: showBottomSheet,
               ),
             ],
           ),
         ),
       ),
+    );
+  }
+
+  void showBottomSheet() {
+    showModalBottomSheet(
+      isDismissible: true,
+      context: context,
+      builder: (context) {
+        return Container(
+          child: _buildBottomNavigationMenu(),
+          height: 180,
+        );
+      },
+    );
+  }
+
+  Column _buildBottomNavigationMenu() {
+    return Column(
+      children: <Widget>[
+        ListTile(
+          leading: Icon(Icons.camera_alt),
+          title: Text("Camera"),
+          onTap: () {
+            getImageCamera();
+            Navigator.of(context).pop();
+          },
+        ),
+        ListTile(
+          leading: Icon(Icons.image),
+          title: Text("Galeria"),
+          onTap: () {
+            getImageCamera();
+            Navigator.of(context).pop();
+          },
+        ),
+        ListTile(
+          leading: Icon(Icons.highlight_remove),
+          title: Text("Remover Imagem"),
+          onTap: () {
+            setState(() {
+              _avatar = null;
+            });
+            Navigator.of(context).pop();
+          },
+        )
+      ],
     );
   }
 }
