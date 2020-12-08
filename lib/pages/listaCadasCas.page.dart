@@ -105,12 +105,16 @@ class _ListaCadasCasState extends State<ListaCadasCas> {
                     child: Column(
                       children: [
                         ListTile(
-                          leading: Container(
+                          leading: GestureDetector(
                             child: Container(
                               height: 75,
                               width: 75,
                               child: avatar,
                             ),
+                            onTap: () {
+                              _showPerfil(player.name, player.position,
+                                  player.rate, player.avatar);
+                            },
                           ),
                           title: Text(player.name),
                           subtitle: Column(
@@ -366,5 +370,66 @@ class _ListaCadasCasState extends State<ListaCadasCas> {
         botaoSorteio = 0xFF919191;
       }
     });
+  }
+
+  _showPerfil(name, position, rate, avatar) {
+    showDialog(
+      context: context,
+      builder: (context) {
+        return Material(
+          type: MaterialType.transparency,
+          child: Center(
+            child: Container(  
+              height: 200,
+              width: 200,
+              child: Stack(
+                children: [
+                  Image.file(new File(avatar)),
+                  Container(
+                    child: Align(
+                      alignment: Alignment.bottomCenter,
+                      child: Container(
+                        height: 60,
+                        width: 200,
+                        color: Color(0x99FFFFFF),
+                        child: Column(
+                          verticalDirection: VerticalDirection.up,
+                          children: [
+                            Align(
+                              alignment: Alignment.centerLeft,
+                              child: RatingBarIndicator(
+                                rating: rate,
+                                itemBuilder: (context, index) => Icon(
+                                  Icons.star,
+                                  color: Colors.amber,
+                                ),
+                                itemCount: 5,
+                                itemSize: 20.0,
+                              ),
+                            ),
+                            Align(
+                              alignment: Alignment.centerLeft,
+                              child: Text(
+                                "Posição: $position",
+                              ),
+                            ),
+                            Align(
+                              alignment: Alignment.centerLeft,
+                              child: Text(
+                                "Nome: $name",
+                              ),
+                            ),
+                          ],
+                        ),
+                      ),
+                    ),
+                  )
+                ],
+              ),
+            ),
+          ),
+        );
+      },
+    );
   }
 }
