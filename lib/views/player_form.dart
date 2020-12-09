@@ -300,7 +300,7 @@ class _PlayerFormState extends State<PlayerForm> {
           leading: Icon(Icons.image),
           title: Text("Galeria"),
           onTap: () {
-            getImageCamera();
+            getImageGallery();
             Navigator.of(context).pop();
           },
         ),

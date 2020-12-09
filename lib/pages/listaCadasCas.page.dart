@@ -24,6 +24,7 @@ var titleCont = '';
 var jgdr = 0;
 var vetJogador = [];
 int botaoSorteio = 0xFF008000;
+var imagem;
 
 class ListaCadasCas extends StatefulWidget {
   @override
@@ -97,7 +98,9 @@ class _ListaCadasCasState extends State<ListaCadasCas> {
                           foregroundColor: Colors.grey[600],
                         )
                       : CircleAvatar(
-                          child: Image.file(new File(player.avatar)),
+                        radius: 90,
+                        backgroundImage: FileImage(new File(player.avatar)),
+                        backgroundColor: Colors.transparent,
                         );
                   return Container(
                     color: Color(selection =
@@ -379,12 +382,20 @@ class _ListaCadasCasState extends State<ListaCadasCas> {
         return Material(
           type: MaterialType.transparency,
           child: Center(
-            child: Container(  
+            child: Container(
               height: 200,
               width: 200,
               child: Stack(
                 children: [
-                  Image.file(new File(avatar)),
+                  imagem = avatar == null ? Container(
+        height: 200,
+        width: 200,
+        color: Colors.grey[300],
+        child: Icon(
+          Icons.person,
+          size: 150,
+        ),
+      ):Image.file(new File(avatar)),
                   Container(
                     child: Align(
                       alignment: Alignment.bottomCenter,
