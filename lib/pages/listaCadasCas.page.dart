@@ -98,9 +98,9 @@ class _ListaCadasCasState extends State<ListaCadasCas> {
                           foregroundColor: Colors.grey[600],
                         )
                       : CircleAvatar(
-                        radius: 90,
-                        backgroundImage: FileImage(new File(player.avatar)),
-                        backgroundColor: Colors.transparent,
+                          radius: 90,
+                          backgroundImage: FileImage(new File(player.avatar)),
+                          backgroundColor: Colors.transparent,
                         );
                   return Container(
                     color: Color(selection =
@@ -381,61 +381,74 @@ class _ListaCadasCasState extends State<ListaCadasCas> {
       builder: (context) {
         return Material(
           type: MaterialType.transparency,
-          child: Center(
+          child: Align(
+            alignment: Alignment.topCenter,
             child: Container(
-              height: 200,
-              width: 200,
-              child: Stack(
-                children: [
-                  imagem = avatar == null ? Container(
-        height: 200,
-        width: 200,
-        color: Colors.grey[300],
-        child: Icon(
-          Icons.person,
-          size: 150,
-        ),
-      ):Image.file(new File(avatar)),
-                  Container(
-                    child: Align(
-                      alignment: Alignment.bottomCenter,
-                      child: Container(
-                        height: 60,
-                        width: 200,
-                        color: Color(0x99FFFFFF),
-                        child: Column(
-                          verticalDirection: VerticalDirection.up,
-                          children: [
-                            Align(
-                              alignment: Alignment.centerLeft,
-                              child: RatingBarIndicator(
-                                rating: rate,
-                                itemBuilder: (context, index) => Icon(
-                                  Icons.star,
-                                  color: Colors.amber,
+              height: MediaQuery.of(context).size.height * 0.7,
+              child: Center(
+                child: Container(
+                  height: MediaQuery.of(context).size.width * 0.7,
+                  width: MediaQuery.of(context).size.width * 0.7,
+                  child: Stack(
+                    children: [
+                      imagem = avatar == null
+                          ? Container(
+                              height: MediaQuery.of(context).size.width * 0.7,
+                              width: MediaQuery.of(context).size.width * 0.7,
+                              color: Colors.grey[300],
+                              child: Icon(
+                                Icons.person,
+                                size: 150,
+                              ),
+                            )
+                          : Image.file(
+                              new File(avatar),
+                              height: MediaQuery.of(context).size.width * 0.7,
+                              width: MediaQuery.of(context).size.width * 0.7,
+                              
+                            ),
+                      Container(
+                        child: Align(
+                          alignment: Alignment.bottomCenter,
+                          child: Container(
+                            height: MediaQuery.of(context).size.width * 0.15,
+                            width: MediaQuery.of(context).size.width * 0.7,
+                            color: Color(0x99FFFFFF),
+                            child: Column(
+                              verticalDirection: VerticalDirection.up,
+                              children: [
+                                Align(
+                                  alignment: Alignment.centerLeft,
+                                  child: RatingBarIndicator(
+                                    rating: rate,
+                                    itemBuilder: (context, index) => Icon(
+                                      Icons.star,
+                                      color: Colors.amber,
+                                    ),
+                                    itemCount: 5,
+                                    itemSize: 20.0,
+                                  ),
                                 ),
-                                itemCount: 5,
-                                itemSize: 20.0,
-                              ),
+                                Align(
+                                  alignment: Alignment.centerLeft,
+                                  child: Text(
+                                    "Posição: $position",
+                                  ),
+                                ),
+                                Align(
+                                  alignment: Alignment.centerLeft,
+                                  child: Text(
+                                    "Nome: $name",
+                                  ),
+                                ),
+                              ],
                             ),
-                            Align(
-                              alignment: Alignment.centerLeft,
-                              child: Text(
-                                "Posição: $position",
-                              ),
-                            ),
-                            Align(
-                              alignment: Alignment.centerLeft,
-                              child: Text(
-                                "Nome: $name",
-                              ),
-                            ),
-                          ],
+                          ),
                         ),
-                      ),
-                    ),
-                  )
-                ],
+                      )
+                    ],
+                  ),
+                ),
               ),
             ),
           ),

@@ -66,8 +66,6 @@ class _PlayerFormState extends State<PlayerForm> {
           sourcePath: pickedFile.path,
           aspectRatio: CropAspectRatio(ratioX: 1, ratioY: 1),
           compressQuality: 100,
-          maxWidth: 200,
-          maxHeight: 200,
           compressFormat: ImageCompressFormat.jpg,
           androidUiSettings: AndroidUiSettings(
             toolbarColor: Colors.green,
@@ -94,8 +92,6 @@ class _PlayerFormState extends State<PlayerForm> {
           sourcePath: pickedFile.path,
           aspectRatio: CropAspectRatio(ratioX: 1, ratioY: 1),
           compressQuality: 100,
-          maxWidth: 200,
-          maxHeight: 200,
           compressFormat: ImageCompressFormat.jpg,
           androidUiSettings: AndroidUiSettings(
             toolbarColor: Colors.green,
@@ -205,7 +201,9 @@ class _PlayerFormState extends State<PlayerForm> {
                         Icons.person,
                         size: 150,
                       )
-                    : Image.file(File('$_avatar')),
+                    : Image(
+                      image: FileImage(File('$_avatar')),
+                    ),
               ),
               TextFormField(
                 initialValue: _name,
