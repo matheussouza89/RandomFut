@@ -203,6 +203,7 @@ class _PlayerFormState extends State<PlayerForm> {
                       )
                     : Image(
                       image: FileImage(File('$_avatar')),
+                      fit: BoxFit.fill,
                     ),
               ),
               TextFormField(

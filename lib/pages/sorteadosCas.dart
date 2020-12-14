@@ -8,7 +8,7 @@ class SorteadosCas extends StatefulWidget {
   _SorteadosCasState createState() => _SorteadosCasState();
 }
 
-var tamanhoList = (int.parse(nJogadores) / int.parse(nTimes)) * 30;
+var tamanhoList = (int.parse(nJogadores) / int.parse(nTimes)) * 80;
 
 class _SorteadosCasState extends State<SorteadosCas> {
   @override
@@ -31,7 +31,7 @@ class _SorteadosCasState extends State<SorteadosCas> {
         label: Text("Ir para a Partida"),
         icon: Icon(Icons.sports_soccer),
       ),
-      body: ListView( 
+      body: ListView(
         children: [
           Column(
             children: [
@@ -43,13 +43,15 @@ class _SorteadosCasState extends State<SorteadosCas> {
                   physics: NeverScrollableScrollPhysics(),
                   itemCount: time1.length,
                   itemBuilder: (context, index) {
-                    return Container(
-                      height: 30,
-                      child: Center(
-                          child: Text('${time1[index]}',
+                    return ListTile(
+                      title: Text('${time1[index].name}',
                               style: TextStyle(
                                 fontSize: 25,
-                              ))),
+                              )),
+                      subtitle: Text('${time1[index].position}',
+                              style: TextStyle(
+                                fontSize: 25,
+                              )),
                     );
                   },
                 ),
@@ -69,13 +71,15 @@ class _SorteadosCasState extends State<SorteadosCas> {
                   physics: NeverScrollableScrollPhysics(),
                   itemCount: time2.length,
                   itemBuilder: (context, index) {
-                    return Container(
-                      height: 30,
-                      child: Center(
-                          child: Text('${time2[index]}',
+                    return ListTile(
+                      title: Text('${time2[index].name}',
                               style: TextStyle(
                                 fontSize: 25,
-                              ))),
+                              )),
+                      subtitle: Text('${time2[index].position}',
+                              style: TextStyle(
+                                fontSize: 25,
+                              )),
                     );
                   },
                 ),

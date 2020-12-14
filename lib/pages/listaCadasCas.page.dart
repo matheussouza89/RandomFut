@@ -10,6 +10,7 @@ import 'package:randomfut/db/database_provider.dart';
 import 'package:randomfut/events/delete_player.dart';
 import 'package:randomfut/events/set_players.dart';
 import 'package:randomfut/events/update_player.dart';
+import 'package:randomfut/models/objJogador.dart';
 import 'package:randomfut/models/player.dart';
 import 'package:randomfut/pages/campoSuperior.dart';
 import 'package:randomfut/routes/app_routes.dart';
@@ -313,8 +314,13 @@ class _ListaCadasCasState extends State<ListaCadasCas> {
               );
           jgdr++;
           titleCont = "Selecionados: $jgdr/$nJogadores";
-          vetJogador.add(name);
-          print(vetJogador);
+          var objJogador = ObjJogador();
+          objJogador.name = name;
+          objJogador.position = position;
+          objJogador.rate = rate;
+          vetJogador.add(objJogador);
+
+          print(vetJogador[0].name);
         } else {
           Player player = Player(
             id: id,
@@ -332,7 +338,7 @@ class _ListaCadasCasState extends State<ListaCadasCas> {
           jgdr--;
           titleCont = "Selecionados: $jgdr/$nJogadores";
           for (var i = 0; i < vetJogador.length; i++) {
-            if (vetJogador[i] == name) {
+            if ((vetJogador[i].name == name) || (vetJogador[i].position == position) || (vetJogador[i].rate == rate)) {
               vetJogador.removeAt(i);
               i = vetJogador.length;
             }
@@ -387,33 +393,35 @@ class _ListaCadasCasState extends State<ListaCadasCas> {
               height: MediaQuery.of(context).size.height * 0.7,
               child: Center(
                 child: Container(
-                  height: MediaQuery.of(context).size.width * 0.7,
-                  width: MediaQuery.of(context).size.width * 0.7,
+                  height: MediaQuery.of(context).size.width * 0.6,
+                  width: MediaQuery.of(context).size.width * 0.6,
                   child: Stack(
                     children: [
                       imagem = avatar == null
                           ? Container(
-                              height: MediaQuery.of(context).size.width * 0.7,
-                              width: MediaQuery.of(context).size.width * 0.7,
+                              height: MediaQuery.of(context).size.width * 0.6,
+                              width: MediaQuery.of(context).size.width * 0.6,
                               color: Colors.grey[300],
                               child: Icon(
                                 Icons.person,
                                 size: 150,
                               ),
                             )
-                          : Image.file(
-                              new File(avatar),
-                              height: MediaQuery.of(context).size.width * 0.7,
-                              width: MediaQuery.of(context).size.width * 0.7,
-                              
+                          : Container(
+                              height: MediaQuery.of(context).size.width * 0.6,
+                              width: MediaQuery.of(context).size.width * 0.6,
+                              child: Image(
+                                image: FileImage(File(avatar)),
+                                fit: BoxFit.fill,
+                              ),
                             ),
                       Container(
                         child: Align(
                           alignment: Alignment.bottomCenter,
                           child: Container(
                             height: MediaQuery.of(context).size.width * 0.15,
-                            width: MediaQuery.of(context).size.width * 0.7,
-                            color: Color(0x99FFFFFF),
+                            width: MediaQuery.of(context).size.width * 0.6,
+                            color: Color(0x66FFFFFF),
                             child: Column(
                               verticalDirection: VerticalDirection.up,
                               children: [

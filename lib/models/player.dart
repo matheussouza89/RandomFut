@@ -41,8 +41,4 @@ class Player {
     rate = map[DatabaseProvider.colRate];
     checked = map[DatabaseProvider.colChecked] == 1;
   }
-    @override
-  String toString() {
-    return "PLayer => (id:$id ,name:$name ,position:$position ,avatar:$avatar ,rate:$rate ,checked:$checked)";
-  }
 }
