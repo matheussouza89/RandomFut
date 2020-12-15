@@ -338,7 +338,9 @@ class _ListaCadasCasState extends State<ListaCadasCas> {
           jgdr--;
           titleCont = "Selecionados: $jgdr/$nJogadores";
           for (var i = 0; i < vetJogador.length; i++) {
-            if ((vetJogador[i].name == name) || (vetJogador[i].position == position) || (vetJogador[i].rate == rate)) {
+            if ((vetJogador[i].name == name) ||
+                (vetJogador[i].position == position) ||
+                (vetJogador[i].rate == rate)) {
               vetJogador.removeAt(i);
               i = vetJogador.length;
             }

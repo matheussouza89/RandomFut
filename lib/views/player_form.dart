@@ -34,10 +34,18 @@ class _PlayerFormState extends State<PlayerForm> {
   bool iconeSave2;
   dynamic imagem;
   String avatarPicker;
+  var _itemSelecionado1 = 'Selecione a opção';
+  var _decisaoPosicao = ['Atacante', 'Defensor', 'Goleiro'];
 
   final picker = ImagePicker();
 
   final _form = GlobalKey<FormState>();
+
+  void _selecaoPosicao(String novoItem) {
+    setState(() {
+      _itemSelecionado1 = novoItem;
+    });
+  }
 
   @override
   void initState() {
@@ -202,9 +210,9 @@ class _PlayerFormState extends State<PlayerForm> {
                         size: 150,
                       )
                     : Image(
-                      image: FileImage(File('$_avatar')),
-                      fit: BoxFit.fill,
-                    ),
+                        image: FileImage(File('$_avatar')),
+                        fit: BoxFit.fill,
+                      ),
               ),
               TextFormField(
                 initialValue: _name,
@@ -228,6 +236,19 @@ class _PlayerFormState extends State<PlayerForm> {
                 initialValue: _position,
                 decoration: InputDecoration(labelText: 'Posição'),
                 onSaved: (value) => _position = value,
+              ),
+              Text("Posição"),
+              DropdownButton(
+                items: _decisaoPosicao.map((String dropDownStringItem) {
+                  return DropdownMenuItem<String>(
+                    value: dropDownStringItem,
+                    child: Text(dropDownStringItem),
+                  );
+                }).toList(),
+                onChanged: (String novoItemSelecionado) {
+                  _selecaoPosicao(novoItemSelecionado);
+                },
+                hint: Text(_itemSelecionado1),
               ),
               SizedBox(
                 height: 40,
