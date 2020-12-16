@@ -34,7 +34,7 @@ class _PlayerFormState extends State<PlayerForm> {
   bool iconeSave2;
   dynamic imagem;
   String avatarPicker;
-  var _itemSelecionado1 = 'Selecione a opção';
+  var _itemSelecionado1;
   var _decisaoPosicao = ['Atacante', 'Defensor', 'Goleiro'];
 
   final picker = ImagePicker();
@@ -59,8 +59,10 @@ class _PlayerFormState extends State<PlayerForm> {
       _checked = widget.player.checked;
       iconeSave1 = false;
       iconeSave2 = true;
+      _itemSelecionado1 = _position == null ? 'Selecione a opção' : _position;
       print(_avatar);
     } else {
+      _itemSelecionado1 ='Selecione a opção';
       _rate = 0.0;
       iconeSave1 = true;
       iconeSave2 = false;
@@ -214,41 +216,48 @@ class _PlayerFormState extends State<PlayerForm> {
                         fit: BoxFit.fill,
                       ),
               ),
-              TextFormField(
-                initialValue: _name,
-                decoration: InputDecoration(labelText: 'Nome'),
-                validator: (value) {
-                  if (value.isEmpty || value == null) {
-                    return 'Nome inválido';
-                  }
-                  if (value.trim().length < 3) {
-                    return 'Nome muito pequeno. No mínimo 3 caracteres.';
-                  }
+              Padding(
+                padding: EdgeInsets.fromLTRB(0, 0, 0, 15),
+                child: TextFormField(
+                  initialValue: _name,
+                  decoration: InputDecoration(labelText: 'Nome'),
+                  validator: (value) {
+                    if (value.isEmpty || value == null) {
+                      return 'Nome inválido';
+                    }
+                    if (value.trim().length < 3) {
+                      return 'Nome muito pequeno. No mínimo 3 caracteres.';
+                    }
 
-                  return null;
-                },
-                onSaved: (value) {
-                  _name = value;
-                  print(_name);
-                },
+                    return null;
+                  },
+                  onSaved: (value) {
+                    _name = value;
+                    _position = _itemSelecionado1;
+                    print(_position);
+                  },
+                ),
               ),
-              TextFormField(
-                initialValue: _position,
-                decoration: InputDecoration(labelText: 'Posição'),
-                onSaved: (value) => _position = value,
-              ),
-              Text("Posição"),
-              DropdownButton(
-                items: _decisaoPosicao.map((String dropDownStringItem) {
-                  return DropdownMenuItem<String>(
-                    value: dropDownStringItem,
-                    child: Text(dropDownStringItem),
-                  );
-                }).toList(),
-                onChanged: (String novoItemSelecionado) {
-                  _selecaoPosicao(novoItemSelecionado);
-                },
-                hint: Text(_itemSelecionado1),
+              Column(
+                children: [
+                  Align(
+                      alignment: Alignment.centerLeft, child: Text("Posição")),
+                  Container(
+                    width: MediaQuery.of(context).size.width,
+                    child: DropdownButton(
+                      items: _decisaoPosicao.map((String dropDownStringItem) {
+                        return DropdownMenuItem<String>(
+                          value: dropDownStringItem,
+                          child: Text(dropDownStringItem),
+                        );
+                      }).toList(),
+                      onChanged: (String novoItemSelecionado) {
+                        _selecaoPosicao(novoItemSelecionado);
+                      },
+                      hint: Text(_itemSelecionado1),
+                    ),
+                  ),
+                ],
               ),
               SizedBox(
                 height: 40,
