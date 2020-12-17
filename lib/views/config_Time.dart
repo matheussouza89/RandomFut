@@ -8,6 +8,8 @@ var nTimes = _itemSelecionado1 == 'Selecione a opção (opção padrão: 2)'
 var nJogadores = _itemSelecionado1 == 'Selecione a opção (opção padrão: 2)'
     ? "10"
     : _itemSelecionado2;
+var balanceamento = _itemSelecionado3 == 'Sim' ? 'Sim' : 'Não';
+var pBalanceamento = _itemSelecionado4 == 'Sim' ? 'Sim' : 'Não';
 var _decisao = ['Sim', 'Não'];
 var _decisaoTime = ['2', '3', '4'];
 var _decisaoJog = [''];
@@ -87,7 +89,11 @@ class _ConfigTimeState extends State<ConfigTime> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: AutoSizeText('Configuração de Times',maxFontSize: 30,maxLines: 1,),
+        title: AutoSizeText(
+          'Configuração de Times',
+          maxFontSize: 30,
+          maxLines: 1,
+        ),
         actions: [
           IconButton(
               icon: Icon(Icons.save),
@@ -134,7 +140,6 @@ class _ConfigTimeState extends State<ConfigTime> {
                     _selecaoNTime(novoItemSelecionado);
                   },
                   hint: Text(_itemSelecionado1),
-
                 ),
                 Visibility(
                   visible: visibilidade,

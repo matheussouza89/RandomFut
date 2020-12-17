@@ -35,7 +35,7 @@ class _PlayerFormState extends State<PlayerForm> {
   dynamic imagem;
   String avatarPicker;
   var _itemSelecionado1;
-  var _decisaoPosicao = ['Atacante', 'Defensor', 'Goleiro'];
+  var _decisaoPosicao = ['Versátil','Atacante', 'Defensor', 'Goleiro'];
 
   final picker = ImagePicker();
 

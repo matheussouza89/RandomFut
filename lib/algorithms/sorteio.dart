@@ -7,10 +7,10 @@ var time1 = [];
 var time2 = [];
 var time3 = [];
 var time4 = [];
-int numeroTimes = 2;
 
 sorteio() {
   var sorteados = [];
+  if(balanceamento == 'Não' || pBalanceamento == 'Não'){
   for (int i = 0; i < vetJogador.length; i++) {
     sorteados.add('');
   }
@@ -73,5 +73,12 @@ sorteio() {
     print(time2);
     print(time3);
     print(time4);
+  }
+  } else if(balanceamento == 'Sim' && pBalanceamento == 'Não'){
+
+  }else if(balanceamento == 'Sim' && pBalanceamento == 'Não'){
+
+  }else if(balanceamento == 'Sim' || pBalanceamento == 'Sim'){
+
   }
 }
