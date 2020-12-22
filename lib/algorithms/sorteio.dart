@@ -9,13 +9,10 @@ var time3 = [];
 var time4 = [];
 sorteio() {
   balanceamento = 'Sim';
-  double rateTotal = 0;
   var sorteados = [];
   for (int i = 0; i < vetJogador.length; i++) {
     sorteados.add('');
-    rateTotal += vetJogador[i].rate;
   }
-  print(rateTotal);
   if (balanceamento == 'Não' && pBalanceamento == 'Não') {
     print(balanceamento);
     for (int i = 0; i < vetJogador.length; i++) {
@@ -81,32 +78,57 @@ sorteio() {
   } else if (balanceamento == 'Sim' && pBalanceamento == 'Não') {
     time1 = [];
     time2 = [];
+    // Ordenar Objeto
+    // vetJogador.sort((a, b) => a.rate.isAfter(b.rate) ? 1 : -1);
     for (int i = 0; i < sorteados.length / 2; i++) {
       time1.add('');
       time2.add('');
     }
-    double maior = -1;
     for (int i = 0; i < vetJogador.length; i++) {
-      for (int j = 0; j < vetJogador.length; j++) {
-        if (maior <= vetJogador[i].rate) {
-          maior = vetJogador[i].rate;
-          if (i % 2 == 0) {
-            sorteados.add(vetJogador[i]);
-          } else {
-            sorteados[(sorteados.length - 1) - i] = vetJogador[i];
-          }
+      if (vetJogador[i].rate == 5) {
+        if (i % 2 == 0) {
+          sorteados[i] = vetJogador[i];
         } else {
-          j--;
+          sorteados[(sorteados.length) - i] = vetJogador[i];
+        }
+      } else if (vetJogador[i].rate == 4) {
+        if (i % 2 == 0) {
+          sorteados[i] = vetJogador[i];
+        } else {
+          sorteados[(sorteados.length) - i] = vetJogador[i];
+        }
+      } else if (vetJogador[i].rate == 3) {
+        if (i % 2 == 0) {
+          sorteados[i] = vetJogador[i];
+        } else {
+          sorteados[(sorteados.length) - i] = vetJogador[i];
+        }
+      } else if (vetJogador[i].rate == 2) {
+        if (i % 2 == 0) {
+          sorteados[i] = vetJogador[i];
+        } else {
+          sorteados[(sorteados.length) - i] = vetJogador[i];
+        }
+      } else if (vetJogador[i].rate == 1) {
+        if (i % 2 == 0) {
+          sorteados[i] = vetJogador[i];
+        } else {
+          sorteados[(sorteados.length) - i] = vetJogador[i];
+        }
+      } else if (vetJogador[i].rate == 0) {
+        if (i % 2 == 0) {
+          sorteados[i] = vetJogador[i];
+        } else {
+          sorteados[(sorteados.length) - i] = vetJogador[i];
         }
       }
     }
-    print(time1);
-    print(time2);
-    print("Oi");
     for (int i = 0; i < sorteados.length / 2; i++) {
       time1[i] = sorteados[i];
       time2[i] = sorteados[((sorteados.length - 1) - i)];
     }
-  } else if (balanceamento == 'Sim' && pBalanceamento == 'Não') {
+    print(time1);
+    print(time2);
+  } else if (balanceamento == 'Não' && pBalanceamento == 'Sim') {
   } else if (balanceamento == 'Sim' && pBalanceamento == 'Sim') {}
 }
