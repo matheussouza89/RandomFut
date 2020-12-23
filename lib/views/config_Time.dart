@@ -29,6 +29,11 @@ class ConfigTime extends StatefulWidget {
 class _ConfigTimeState extends State<ConfigTime> {
   final _formTime = GlobalKey<FormState>();
 
+  initState() {
+    super.initState();
+    print(balanceamento);
+  }
+
   numeroJogadoresF() {
     setState(() {
       if (_itemSelecionado1 == '2') {
@@ -76,12 +81,14 @@ class _ConfigTimeState extends State<ConfigTime> {
   void _selecaoBalanceamento(String novoItem) {
     setState(() {
       _itemSelecionado3 = novoItem;
+      balanceamento = _itemSelecionado3;
     });
   }
 
   void _selecaoBasePosicao(String novoItem) {
     setState(() {
       _itemSelecionado4 = novoItem;
+      pBalanceamento = _itemSelecionado4;
     });
   }
 

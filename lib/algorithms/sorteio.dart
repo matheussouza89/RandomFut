@@ -8,7 +8,7 @@ var time2 = [];
 var time3 = [];
 var time4 = [];
 sorteio() {
-  balanceamento = 'Sim';
+  print(balanceamento);
   var sorteados = [];
   for (int i = 0; i < vetJogador.length; i++) {
     sorteados.add('');
@@ -79,7 +79,7 @@ sorteio() {
     time1 = [];
     time2 = [];
     // Ordenar Objeto
-    // vetJogador.sort((a, b) => a.rate.isAfter(b.rate) ? 1 : -1);
+    vetJogador.sort((a, b) => b.rate.compareTo(a.rate));
     for (int i = 0; i < sorteados.length / 2; i++) {
       time1.add('');
       time2.add('');
