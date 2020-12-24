@@ -354,7 +354,7 @@ class _CountDownTimerState extends State<CountDownTimer> {
                           Visibility(
                             visible: isRunning,
                             child: Padding(
-                              padding: EdgeInsets.symmetric(vertical: 28.0),
+                              padding: EdgeInsets.symmetric(vertical: 20.0),
                               child: RaisedButton(
                                 color: Color(0xFF008000),
                                 shape: RoundedRectangleBorder(
@@ -378,7 +378,7 @@ class _CountDownTimerState extends State<CountDownTimer> {
                           Visibility(
                             visible: start,
                             child: Padding(
-                              padding: EdgeInsets.symmetric(vertical: 28.0),
+                              padding: EdgeInsets.symmetric(vertical: 20.0),
                               child: RaisedButton(
                                 color: Color(0xFF008000),
                                 shape: RoundedRectangleBorder(

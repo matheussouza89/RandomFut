@@ -103,6 +103,7 @@ class ModoPage extends StatelessWidget {
 
 Widget _infoDialog(BuildContext context) {
   return new AlertDialog(
+    scrollable: true,
     title: const Text('Info. Modos de jogo'),
     content: new Column(
       mainAxisSize: MainAxisSize.min,
