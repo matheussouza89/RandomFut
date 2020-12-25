@@ -13,7 +13,7 @@ sorteio() {
   for (int i = 0; i < vetJogador.length; i++) {
     sorteados.add('');
   }
-  if (balanceamento == 'Não' && pBalanceamento == 'Não') {
+  if (balanceamento == false && pBalanceamento == false) {
     print(balanceamento);
     for (int i = 0; i < vetJogador.length; i++) {
       var aux = r.nextInt(vetJogador.length);
@@ -75,7 +75,7 @@ sorteio() {
       print(time3);
       print(time4);
     }
-  } else if (balanceamento == 'Sim' && pBalanceamento == 'Não') {
+  } else if (balanceamento == true && pBalanceamento == false) {
     time1 = [];
     time2 = [];
     // Ordenar Objeto
@@ -129,6 +129,6 @@ sorteio() {
     }
     print(time1);
     print(time2);
-  } else if (balanceamento == 'Não' && pBalanceamento == 'Sim') {
-  } else if (balanceamento == 'Sim' && pBalanceamento == 'Sim') {}
+  } else if (balanceamento == false && pBalanceamento == true) {
+  }
 }

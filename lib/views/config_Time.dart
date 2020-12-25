@@ -8,18 +8,17 @@ var nTimes = _itemSelecionado1 == 'Selecione a opção (opção padrão: 2)'
 var nJogadores = _itemSelecionado1 == 'Selecione a opção (opção padrão: 2)'
     ? "10"
     : _itemSelecionado2;
-var balanceamento = _itemSelecionado3 == 'Sim' ? 'Sim' : 'Não';
-var pBalanceamento = _itemSelecionado4 == 'Sim' ? 'Sim' : 'Não';
-var _decisao = ['Sim', 'Não'];
+bool balanceamento = _itemSelecionado3 == true ? true : false;
+bool pBalanceamento = _itemSelecionado4 == true ? true : false;
 var _decisaoTime = ['2', '3', '4'];
 var _decisaoJog = [''];
 var _itemSelecionado1 = 'Selecione a opção (opção padrão: 2)';
 var _itemSelecionado2 = 'Selecione o numero total de Jogadores';
-var _itemSelecionado3 = 'Selecione a opção (opção padrão: Não)';
-var _itemSelecionado4 = 'Selecione a opção (opção padrão: Não)';
-var visibilidade = false;
-var visibilidadeTime3 = false;
-var visibilidadeTime4 = false;
+bool _itemSelecionado3 = false;
+bool _itemSelecionado4 = false;
+bool visibilidade = false;
+bool visibilidadeTime3 = false;
+bool visibilidadeTime4 = false;
 
 class ConfigTime extends StatefulWidget {
   @override
@@ -75,20 +74,6 @@ class _ConfigTimeState extends State<ConfigTime> {
     setState(() {
       _itemSelecionado2 = novoItem;
       nJogadores = _itemSelecionado2;
-    });
-  }
-
-  void _selecaoBalanceamento(String novoItem) {
-    setState(() {
-      _itemSelecionado3 = novoItem;
-      balanceamento = _itemSelecionado3;
-    });
-  }
-
-  void _selecaoBasePosicao(String novoItem) {
-    setState(() {
-      _itemSelecionado4 = novoItem;
-      pBalanceamento = _itemSelecionado4;
     });
   }
 
@@ -181,18 +166,18 @@ class _ConfigTimeState extends State<ConfigTime> {
                   "Times Balanceados",
                   style: TextStyle(fontSize: 20),
                 ),
-                DropdownButton(
-                  items: _decisao.map((String dropDownStringItem) {
-                    return DropdownMenuItem<String>(
-                      value: dropDownStringItem,
-                      child: Text(dropDownStringItem),
-                    );
-                  }).toList(),
-                  onChanged: (String novoItemSelecionado) {
-                    _selecaoBalanceamento(novoItemSelecionado);
-                  },
-                  hint: Text(_itemSelecionado3),
-                ),
+                Switch(
+                    value: _itemSelecionado3,
+                    onChanged: (value) {
+                      setState(() {
+                        if (_itemSelecionado3 == true) {
+                          _itemSelecionado3 = false;
+                        } else {
+                          _itemSelecionado3 = true;
+                        }
+                      });
+                      print(_itemSelecionado3);
+                    }),
                 SizedBox(
                   height: 60,
                 ),
@@ -200,18 +185,18 @@ class _ConfigTimeState extends State<ConfigTime> {
                   "Sorteio com Base na Posição",
                   style: TextStyle(fontSize: 20),
                 ),
-                DropdownButton(
-                  items: _decisao.map((String dropDownStringItem) {
-                    return DropdownMenuItem<String>(
-                      value: dropDownStringItem,
-                      child: Text(dropDownStringItem),
-                    );
-                  }).toList(),
-                  onChanged: (String novoItemSelecionado) {
-                    _selecaoBasePosicao(novoItemSelecionado);
-                  },
-                  hint: Text(_itemSelecionado4),
-                )
+                Switch(
+                    value: _itemSelecionado4,
+                    onChanged: (value) {
+                      setState(() {
+                        if (_itemSelecionado4 == true) {
+                          _itemSelecionado4 = false;
+                        } else {
+                          _itemSelecionado4 = true;
+                        }
+                      });
+                      print(_itemSelecionado4);
+                    })
               ],
             ),
           ),
