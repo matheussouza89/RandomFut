@@ -406,7 +406,8 @@ class _ListaCadasCasState extends State<ListaCadasCas> {
                               color: Colors.grey[300],
                               child: Icon(
                                 Icons.person,
-                                size: 150,
+                                size: 250,
+                                color: Colors.grey[600],
                               ),
                             )
                           : Container(
