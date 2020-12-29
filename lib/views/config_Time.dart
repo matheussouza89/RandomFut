@@ -169,13 +169,6 @@ class _ConfigTimeState extends State<ConfigTime> {
                 Switch(
                     value: _itemSelecionado3,
                     onChanged: (value) {
-                      setState(() {
-                        if (_itemSelecionado3 == true) {
-                          _itemSelecionado3 = false;
-                        } else {
-                          _itemSelecionado3 = true;
-                        }
-                      });
                       print(_itemSelecionado3);
                     }),
                 SizedBox(
@@ -192,6 +185,7 @@ class _ConfigTimeState extends State<ConfigTime> {
                         if (_itemSelecionado4 == true) {
                           _itemSelecionado4 = false;
                         } else {
+                          _itemSelecionado3 = false;
                           _itemSelecionado4 = true;
                         }
                       });
