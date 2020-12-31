@@ -1,6 +1,5 @@
 import 'package:auto_size_text/auto_size_text.dart';
 import 'package:flutter/material.dart';
-import 'package:randomfut/pages/listaCadasCamp.dart';
 import 'package:randomfut/pages/listaCadasCas.page.dart';
 
 class ModoPage extends StatelessWidget {

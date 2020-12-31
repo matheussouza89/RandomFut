@@ -2,26 +2,6 @@ import 'package:path/path.dart';
 import 'package:randomfut/models/player.dart';
 import 'package:sqflite/sqflite.dart';
 
-class Listagem {
-  int qtde;
-  int id;
-  String name;
-  String position;
-  String avatar;
-  double rate;
-  bool checked;
-
-  Listagem({
-    this.qtde,
-    this.id,
-    this.name,
-    this.position,
-    this.avatar,
-    this.rate,
-    this.checked,
-  });
-}
-
 class DatabaseProvider {
   static const String playerTable = 'player';
   static const String colId = 'id';

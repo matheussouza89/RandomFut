@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:randomfut/bloc/player_bloc.dart';
-import 'package:randomfut/pages/listaCadasCamp.dart';
 import 'package:randomfut/pages/listaCadasCas.page.dart';
 import 'package:randomfut/pages/login.page.dart';
 import 'package:randomfut/pages/modo.page.dart';
@@ -12,7 +11,6 @@ import 'bloc/player_bloc.dart';
 void main() => runApp(MyApp());
 
 class MyApp extends StatelessWidget {
-  // This widget is the root of your application.
   @override
   Widget build(BuildContext context) {
     return BlocProvider<PlayerBloc>(
@@ -28,7 +26,6 @@ class MyApp extends StatelessWidget {
           AppRoutes.LISTACADASCAS: (_) => ListaCadasCas(),
           AppRoutes.MODO: (_) => ModoPage(),
           AppRoutes.PLAYERFORM: (_) => PlayerForm(),
-         // AppRoutes.LISTACADASCAMP: (_) => ListaCadasCamp(),
         },
       ),
     );
