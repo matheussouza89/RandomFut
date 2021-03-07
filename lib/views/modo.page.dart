@@ -1,6 +1,7 @@
 import 'package:auto_size_text/auto_size_text.dart';
 import 'package:flutter/material.dart';
-import 'package:randomfut/pages/listaCadasCas.page.dart';
+import 'package:randomfut/views/listaCadasCamp.dart';
+import 'package:randomfut/views/listaCadasCas.page.dart';
 
 class ModoPage extends StatelessWidget {
   @override
@@ -78,7 +79,11 @@ class ModoPage extends StatelessWidget {
               width: 310,
               child: RaisedButton(
                 onPressed: () => {
-                  
+                  Navigator.push(
+                      context,
+                      MaterialPageRoute(
+                        builder: (context) => ListaCadasCamp(),
+                      ))
                 },
                 elevation: 8,
                 shape: new RoundedRectangleBorder(
@@ -114,21 +119,27 @@ Widget _infoDialog(BuildContext context) {
             fontWeight: FontWeight.w800,
           ),
         ),
-        SizedBox(height: 10,),
+        SizedBox(
+          height: 10,
+        ),
         Text(
-          "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nam eget rhoncus ante. Integer malesuada elit eget dui hendrerit, id scelerisque sem pulvinar. Ut a neque sed odio tempus rutrum luctus sed sapien. Suspendisse sodales, sapien ac feugiat luctus, risus dolor facilisis justo, quis sollicitudin ex nunc ut nisi. Aliquam efficitur velit eget felis mattis, fermentum consectetur leo eleifend. In hac habitasse platea dictumst. Quisque ac sem sit amet massa consectetur imperdiet.",
+          "O Modo Casual permite o gerenciamento de partidas de maneira muito mais fácil. Ele funciona desta maneira: Cadastre jogadores, dando a eles o nível e a posição opicionalmente. Sorteie times aleatórios, balanceados ou posicionados e gerencie o tempo da Partida!",
           textAlign: TextAlign.justify,
         ),
-        SizedBox(height: 15,),
+        SizedBox(
+          height: 15,
+        ),
         Text(
           "Modo Campeonato",
           style: TextStyle(
             fontWeight: FontWeight.w800,
           ),
         ),
-        SizedBox(height: 10,),
+        SizedBox(
+          height: 10,
+        ),
         Text(
-          "Pellentesque efficitur malesuada mauris, vitae porta elit sagittis a. Vestibulum molestie, nisi vitae tempus imperdiet, massa nisi pellentesque dolor, id tempus dui tellus a metus. Praesent vel porta nulla. Nam lobortis volutpat ex in condimentum. Nam orci purus, hendrerit iaculis erat ac, fermentum placerat justo.",
+          "O Modo Campeonato possibilita a criação e o gerenciamento de campeonatos com times pré-definidos. Ele funciona desta maneira: Cadastre times com jogadores definidos, sorteie o chaveamento das partidas e gerencie o tempo das Partidas!",
           textAlign: TextAlign.justify,
         )
       ],

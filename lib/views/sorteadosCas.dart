@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:randomfut/algorithms/sorteio.dart';
-import 'package:randomfut/pages/timer.page.dart';
+import 'package:randomfut/controller/sorteio.dart';
+import 'package:randomfut/views/timer.page.dart';
 import 'package:randomfut/views/config_Time.dart';
 
 class SorteadosCas extends StatefulWidget {

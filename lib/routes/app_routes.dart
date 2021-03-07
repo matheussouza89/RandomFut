@@ -8,4 +8,5 @@ class AppRoutes {
   static const LISTACADASCAS = '/listaCadasCas';
   static const MODO = '/modo';
   static const PLAYERFORM = '/playerForm';
+  static const TEAMFORM = '/teamForm';
 }

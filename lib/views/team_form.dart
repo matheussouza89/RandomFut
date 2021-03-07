@@ -1,41 +1,37 @@
 import 'dart:io';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:flutter_rating_bar/flutter_rating_bar.dart';
-import 'package:randomfut/bloc/player_bloc.dart';
+import 'package:randomfut/bloc/team_bloc.dart';
 import 'package:randomfut/db/database_provider.dart';
-import 'package:randomfut/events/player/add_player.dart';
-import 'package:randomfut/events/player/update_player.dart';
-import 'package:randomfut/models/player.dart';
-import 'package:randomfut/views/listaCadasCas.page.dart';
+import 'package:randomfut/events/team/add_team.dart';
+import 'package:randomfut/events/team/update_team.dart';
+import 'package:randomfut/models/team.dart';
+import 'package:randomfut/views/listaCadasCamp.dart';
 import 'package:image_cropper/image_cropper.dart';
 import 'package:image_picker/image_picker.dart';
 
-class PlayerForm extends StatefulWidget {
-  final Player player;
-  final int playerIndex;
+class TeamForm extends StatefulWidget {
+  final Team team;
+  final int teamIndex;
 
-  PlayerForm({this.player, this.playerIndex});
+  TeamForm({this.team, this.teamIndex});
 
   @override
-  _PlayerFormState createState() {
-    return _PlayerFormState();
+  _TeamFormState createState() {
+    return _TeamFormState();
   }
 }
 
-class _PlayerFormState extends State<PlayerForm> {
+class _TeamFormState extends State<TeamForm> {
   int _id;
   String _name;
-  String _position;
   String _avatar;
-  double _rate;
   bool _checked;
   bool iconeSave1;
   bool iconeSave2;
   dynamic imagem;
   String avatarPicker;
   var _itemSelecionado1;
-  var _decisaoPosicao = ['Multifuncional','Linha', 'Goleiro'];
 
   final picker = ImagePicker();
 
@@ -50,20 +46,16 @@ class _PlayerFormState extends State<PlayerForm> {
   @override
   void initState() {
     super.initState();
-    if (widget.player != null) {
-      _id = widget.player.id;
-      _name = widget.player.name;
-      _position = widget.player.position;
-      _avatar = widget.player.avatar;
-      _rate = widget.player.rate;
-      _checked = widget.player.checked;
+    if (widget.team != null) {
+      _id = widget.team.id;
+      _name = widget.team.name;
+      _avatar = widget.team.avatar;
+      _checked = widget.team.checked;
       iconeSave1 = false;
       iconeSave2 = true;
-      _itemSelecionado1 = _position == null ? 'Selecione a opção' : _position;
       print(_avatar);
     } else {
       _itemSelecionado1 ='Selecione a opção';
-      _rate = 0.0;
       iconeSave1 = true;
       iconeSave2 = false;
     }
@@ -125,7 +117,7 @@ class _PlayerFormState extends State<PlayerForm> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text('Cadastro de Jogador'),
+        title: Text('Cadastro de Time'),
         actions: [
           Visibility(
             visible: iconeSave1,
@@ -136,17 +128,15 @@ class _PlayerFormState extends State<PlayerForm> {
                 if (isValid) {
                   _form.currentState.save();
                   print(_avatar);
-                  Player player = Player(
+                  Team team = Team(
                     name: _name,
-                    position: _position,
-                    rate: _rate,
                     avatar: _avatar,
                     checked: false,
                   );
-                  DatabaseProvider.db.insertPlayer(player).then(
-                        (storedPlayer) =>
-                            BlocProvider.of<PlayerBloc>(context).add(
-                          AddPlayer(storedPlayer),
+                  DatabaseProvider.db.insertTeams(team).then(
+                        (storedTeam) =>
+                            BlocProvider.of<TeamBloc>(context).add(
+                          AddTeam(storedTeam),
                         ),
                       );
                   Navigator.of(context).pop();
@@ -154,7 +144,7 @@ class _PlayerFormState extends State<PlayerForm> {
                   Navigator.push(
                     context,
                     MaterialPageRoute(
-                      builder: (context) => ListaCadasCas(),
+                      builder: (context) => ListaCadasCamp(),
                     ),
                   );
                 }
@@ -169,18 +159,16 @@ class _PlayerFormState extends State<PlayerForm> {
                   final isValid = _form.currentState.validate();
                   if (isValid) {
                     _form.currentState.save();
-                    print(widget.player);
-                    Player player = Player(
+                    print(widget.team);
+                    Team team = Team(
                       id: _id,
                       name: _name,
-                      position: _position,
-                      rate: _rate,
                       avatar: _avatar,
                       checked: _checked,
                     );
-                    DatabaseProvider.db.updatePlayer(player).then((storedPlayer) {
-                      BlocProvider.of<PlayerBloc>(context).add(
-                        UpdatePlayer(widget.playerIndex, player),
+                    DatabaseProvider.db.updateTeams(team).then((storedTeam) {
+                      BlocProvider.of<TeamBloc>(context).add(
+                        UpdateTeam(widget.teamIndex, team),
                       );
                     });
                     Navigator.of(context).pop();
@@ -188,7 +176,7 @@ class _PlayerFormState extends State<PlayerForm> {
                     Navigator.push(
                       context,
                       MaterialPageRoute(
-                        builder: (context) => ListaCadasCas(),
+                        builder: (context) => ListaCadasCamp(),
                       ),
                     );
                   }
@@ -233,59 +221,8 @@ class _PlayerFormState extends State<PlayerForm> {
                   },
                   onSaved: (value) {
                     _name = value;
-                    _position = _itemSelecionado1;
-                    print(_position);
                   },
                 ),
-              ),
-              Column(
-                children: [
-                  Align(
-                      alignment: Alignment.centerLeft, child: Text("Posição")),
-                  Container(
-                    width: MediaQuery.of(context).size.width,
-                    child: DropdownButton(
-                      items: _decisaoPosicao.map((String dropDownStringItem) {
-                        return DropdownMenuItem<String>(
-                          value: dropDownStringItem,
-                          child: Text(dropDownStringItem),
-                        );
-                      }).toList(),
-                      onChanged: (String novoItemSelecionado) {
-                        _selecaoPosicao(novoItemSelecionado);
-                      },
-                      hint: Text(_itemSelecionado1),
-                    ),
-                  ),
-                ],
-              ),
-              SizedBox(
-                height: 40,
-              ),
-              RatingBar(
-                glow: false,
-                initialRating: _rate,
-                direction: Axis.horizontal,
-                allowHalfRating: false,
-                itemCount: 5,
-                ratingWidget: RatingWidget(
-                  full: Icon(
-                    Icons.star,
-                    color: Colors.amber,
-                  ),
-                  half: Icon(
-                    Icons.star_half,
-                    color: Colors.amber,
-                  ),
-                  empty: Icon(
-                    Icons.star_border,
-                    color: Colors.amber,
-                  ),
-                ),
-                itemPadding: EdgeInsets.symmetric(horizontal: 4.0),
-                onRatingUpdate: (rating) {
-                  _rate = rating;
-                },
               ),
               SizedBox(
                 height: 40,
@@ -346,4 +283,7 @@ class _PlayerFormState extends State<PlayerForm> {
       ],
     );
   }
+}
+
+class UpdateTime {
 }

@@ -1,8 +1,8 @@
-import 'package:randomfut/events/add_player.dart';
-import 'package:randomfut/events/delete_player.dart';
-import 'package:randomfut/events/player_event.dart';
-import 'package:randomfut/events/set_players.dart';
-import 'package:randomfut/events/update_player.dart';
+import 'package:randomfut/events/player/add_player.dart';
+import 'package:randomfut/events/player/delete_player.dart';
+import 'package:randomfut/events/player/player_event.dart';
+import 'package:randomfut/events/player/set_players.dart';
+import 'package:randomfut/events/player/update_player.dart';
 import 'package:randomfut/models/player.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 

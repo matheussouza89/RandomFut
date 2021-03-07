@@ -1,6 +1,6 @@
 import 'package:auto_size_text/auto_size_text.dart';
 import 'package:flutter/material.dart';
-import 'package:randomfut/pages/listaCadasCas.page.dart';
+import 'package:randomfut/views/listaCadasCas.page.dart';
 
 var nTimes = _itemSelecionado1 == 'Selecione a opção (opção padrão: 2)'
     ? "2"

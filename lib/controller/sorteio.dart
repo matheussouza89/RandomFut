@@ -1,5 +1,5 @@
 import 'dart:math';
-import 'package:randomfut/pages/listaCadasCas.page.dart';
+import 'package:randomfut/views/listaCadasCas.page.dart';
 import 'package:randomfut/views/config_Time.dart';
 
 Random r = Random();

@@ -4,15 +4,15 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_rating_bar/flutter_rating_bar.dart';
 import 'package:flutter_speed_dial/flutter_speed_dial.dart';
-import 'package:randomfut/algorithms/sorteio.dart';
+import 'package:randomfut/controller/sorteio.dart';
 import 'package:randomfut/bloc/player_bloc.dart';
 import 'package:randomfut/db/database_provider.dart';
-import 'package:randomfut/events/delete_player.dart';
-import 'package:randomfut/events/set_players.dart';
-import 'package:randomfut/events/update_player.dart';
+import 'package:randomfut/events/player/delete_player.dart';
+import 'package:randomfut/events/player/set_players.dart';
+import 'package:randomfut/events/player/update_player.dart';
 import 'package:randomfut/models/objJogador.dart';
 import 'package:randomfut/models/player.dart';
-import 'package:randomfut/pages/campoSuperior.dart';
+import 'package:randomfut/views/campoSuperior.dart';
 import 'package:randomfut/routes/app_routes.dart';
 import 'package:randomfut/views/config_Tempo.dart';
 import 'package:randomfut/views/config_Time.dart';
@@ -36,7 +36,7 @@ class _ListaCadasCasState extends State<ListaCadasCas> {
   @override
   initState() {
     super.initState();
-    DatabaseProvider.db.upadateCheck();
+    DatabaseProvider.db.upadateCheckPlayer();
     DatabaseProvider.db.getPlayers().then((playerList) {
       print(playerList);
       BlocProvider.of<PlayerBloc>(context).add(
@@ -204,7 +204,7 @@ class _ListaCadasCasState extends State<ListaCadasCas> {
                                             FlatButton(
                                               onPressed: () {
                                                 DatabaseProvider.db
-                                                    .delete(player.id)
+                                                    .deletePlayer(player.id)
                                                     .then((_) {
                                                   BlocProvider.of<PlayerBloc>(
                                                           context)
@@ -307,7 +307,7 @@ class _ListaCadasCasState extends State<ListaCadasCas> {
             rate: rate,
             checked: true,
           );
-          DatabaseProvider.db.update(player).then(
+          DatabaseProvider.db.updatePlayer(player).then(
                 (storedPlayer) => BlocProvider.of<PlayerBloc>(context).add(
                   UpdatePlayer(playerIndex, player),
                 ),
@@ -330,7 +330,7 @@ class _ListaCadasCasState extends State<ListaCadasCas> {
             rate: rate,
             checked: false,
           );
-          DatabaseProvider.db.update(player).then(
+          DatabaseProvider.db.updatePlayer(player).then(
                 (storedPlayer) => BlocProvider.of<PlayerBloc>(context).add(
                   UpdatePlayer(playerIndex, player),
                 ),
@@ -360,7 +360,7 @@ class _ListaCadasCasState extends State<ListaCadasCas> {
           rate: rate,
           checked: false,
         );
-        DatabaseProvider.db.update(player).then(
+        DatabaseProvider.db.updatePlayer(player).then(
               (storedPlayer) => BlocProvider.of<PlayerBloc>(context).add(
                 UpdatePlayer(playerIndex, player),
               ),

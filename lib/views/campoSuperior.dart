@@ -1,7 +1,7 @@
 import 'dart:async';
 import 'dart:math';
 import 'package:flutter/material.dart';
-import 'package:randomfut/pages/campoInferior.dart';
+import 'package:randomfut/views/campoInferior.dart';
 
 class CampoSuperior extends StatelessWidget {
   @override
